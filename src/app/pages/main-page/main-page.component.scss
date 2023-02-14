@@ -1,0 +1,153 @@
+$bg-color: #FFFFFF;
+$text-color: #000;
+$main-color: #29fd53;
+
+.body {
+  min-width: 100vh;
+  background: $bg-color;
+  color: $text-color;
+}
+
+header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent;
+  padding: 28px 12%;
+  transition: all .5s ease;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  color: $text-color;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.logo i {
+  color: $main-color;
+  font-size: 28px;
+  margin-right: 3px;
+}
+
+.navbar {
+  display: flex;
+}
+
+.navbar a{
+  color: $text-color;
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding: 5px 0;
+  margin: 0px 30px;
+  transition: all .5s ease;
+}
+
+.navbar a:hover {
+  color: $main-color;
+}
+
+.navbar a.active {
+  color: $main-color;
+}
+
+.main {
+  display: flex;
+  align-items: center;
+}
+
+.main i {
+  margin-right: 5px;
+}
+.main a {
+  margin-right: 25px;
+  margin-left: 10px;
+  color: $text-color;
+  font-size: 1.1rem;
+  font-weight: 500;
+  transition: all .5s ease;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+}
+
+.user i {
+  color: $main-color
+}
+
+.main a:hover {
+  color: $main-color;
+}
+
+.main #menu {
+  display: none;
+  color: $text-color;
+  font-size: 30px;
+  cursor: pointer;
+  z-index: 10001;
+  transition: all .5s ease;
+}
+
+.main #menu:hover {
+  color: $main-color;
+}
+
+@media screen and (max-width: 1280px) {
+  header{
+    padding: 14px 2%;
+    transition: .2s;
+  }
+
+  .navbar a {
+    padding: 5px 0;
+    margin: 0px 20px;
+  }
+}
+
+@media screen and (max-width: 690px) {
+  .main #menu {
+    display: block;
+  }
+
+  .navbar {
+    position: absolute;
+    top: 100%;
+    right: -100%; // Если экран маленький, то навбар смещается вправо за его границу
+    width: 270px; //
+    height: 29vh;
+    background: $main-color;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    border-radius: 10px;
+    transition: all .5s ease;
+  }
+
+  .navbar a {
+    display: block;
+    margin: 12px 0;
+    padding: 0 25px;
+    transition: all .5s ease;
+  }
+
+  .navbar a:hover {
+    color: $bg-color;
+    transform: translateX(10px);
+  }
+
+  .navbar a.active {
+    color: $bg-color;
+  }
+
+  .navbar.open { // Открытие навбара путем передвижения его из-за экрана влево (-100->2)
+    right: 2%;
+  }
+}

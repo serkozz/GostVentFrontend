@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { MainPageComponent } from './pages/main-page/main-page.component';
+import { MainPageAdaptiveComponent } from './pages/main-page-adaptive/main-page-adaptive.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: MainPageComponent
+    component: MainPageAdaptiveComponent
   },
   { path: '**', component: PageNotFoundComponent },
 ];

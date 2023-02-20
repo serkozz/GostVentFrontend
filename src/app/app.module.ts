@@ -4,14 +4,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { MainPageComponent } from './pages/main-page/main-page.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
+import { MainPageAdaptiveComponent } from './pages/main-page-adaptive/main-page-adaptive.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PageNotFoundComponent,
-    MainPageComponent,
+    MainPageAdaptiveComponent,
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [],

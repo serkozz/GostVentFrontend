@@ -1,0 +1,1 @@
+export let BACKEND_BASE_ADDRESS: string = 'http://localhost:5072/';

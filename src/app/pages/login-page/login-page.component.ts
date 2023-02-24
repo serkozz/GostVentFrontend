@@ -1,6 +1,13 @@
-import { Component } from '@angular/core';
-import { LoginService } from 'src/app/services/login.service';
-import { UserData } from 'src/app/types/userData';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { SHA256 } from 'crypto-js';
+import {
+  LoginService,
+  LoginState,
+  RegisterState,
+} from 'src/app/services/login.service';
+import { User } from 'src/app/types/user';
 
 @Component({
   selector: 'login-page',
@@ -8,49 +15,85 @@ import { UserData } from 'src/app/types/userData';
   styleUrls: ['./login-page.component.scss'],
 })
 export class LoginPageComponent {
+  passwordMinLength: number = 8;
+  usernameMinLength: number = 5;
 
-  regName: string = '';
-  regEmail: string = '';
-  regPassword: string = '';
+  signupForm!: FormGroup;
+  loginForm!: FormGroup;
 
-  logEmail: string = '';
-  logPassword: string = '';
+  userExists: boolean = true;
+  alreadyRegistered: boolean = false;
 
-  constructor(private loginService: LoginService) {
+  constructor(
+    private loginService: LoginService,
+    private formBuilder: FormBuilder,
+    private router: Router
+  ) {}
 
+  ngOnInit() {
+    this.loginForm = this.formBuilder.group({
+      email: ['', Validators.compose([Validators.required, Validators.email])],
+      password: [
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(this.passwordMinLength),
+        ]),
+      ],
+    });
+
+    this.signupForm = this.formBuilder.group({
+      username: [
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(this.usernameMinLength),
+        ]),
+      ],
+      email: ['', Validators.compose([Validators.required, Validators.email])],
+      password: [
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(this.passwordMinLength),
+        ]),
+      ],
+    });
   }
 
-  isValidEmail(emailString: string): boolean {
-    try {
-      let pattern = new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$');
-      let valid = pattern.test(emailString);
-      return valid;
-    } catch (TypeError) {
-      return false;
+  loginBtnClick(): void {
+    if (this.loginForm.invalid) {
+      this.userExists = false;
+      return;
     }
+    let user = new User(
+      null,
+      this.loginForm.controls['email'].value,
+      this.loginForm.controls['password'].value
+    );
+    console.log(`User ${JSON.stringify(user)} logged in`);
+    let loginState: LoginState = this.loginService.loginUser(user);
+    if (loginState == LoginState.LOGGED_IN) this.router.navigate(['/']);
   }
 
-  loginBtnClick(): UserData {
-    let user = new UserData(null, this.logEmail, this.logPassword);
-    let isValidEmail = this.isValidEmail(this.logEmail);
-    // console.log(
-    //   `User ${JSON.stringify(user)} LOGGED IN. Email was valid: ${isValidEmail}`
-    // );
-    this.loginService.doesUserExists(user)
-    return user;
-  }
-
-  registerBtnClick() {
-    let user = new UserData(this.regName, this.regEmail, this.regPassword);
-    let isValidEmail = this.isValidEmail(this.regEmail);
-    let isValidPasswordLength: boolean = this.regPassword.length > 8
-
-    // console.log(
-    //   `User ${JSON.stringify(
-    //     user
-    //   )} REGISTERED. Email was valid: ${isValidEmail}`
-    // );
-
-    return user;
+  registerBtnClick(): void {
+    if (this.signupForm.invalid) return;
+    let user = new User(
+      this.signupForm.controls['username'].value,
+      this.signupForm.controls['email'].value,
+      SHA256(this.signupForm.controls['password'].value).toString()
+    );
+    let registerState: RegisterState = this.loginService.registerUser(user);
+    if (registerState == RegisterState.REGISTERED) {
+      setTimeout(() => {
+        this.router.navigate(['/']);
+      }, 1000);
+      return;
+    } else {
+      this.alreadyRegistered = true;
+      setTimeout(() => {
+        this.alreadyRegistered = false;
+      }, 3000);
+    }
   }
 }

@@ -3,21 +3,33 @@
     <input type="checkbox" id="chk" aria-hidden="true">
 
     <div class="signup">
-      <form>
+      <form [formGroup]="signupForm" class="container">
         <label for="chk" aria-hidden="true">Регистрация</label>
-        <input [(ngModel)]="regName" type="text" name="txt" placeholder="Имя пользователя" required="">
-        <input [(ngModel)]="regEmail" type="email" name="email" placeholder="Почта" required="" id="regEmail">
-        <input [(ngModel)]="regPassword" type="password" name="pswd" placeholder="Пароль" required="" id="regPass">
-        <button (click)="registerBtnClick()">Зарегистрироваться</button>
+        <input formControlName="username" type="text" name="txt" placeholder="Имя пользователя">
+        <small *ngIf="signupForm.get('username')?.invalid && signupForm.controls['username']?.dirty"
+          class="error-message">Ошибка заполнения (минимум {{usernameMinLength}} символов)</small>
+        <input formControlName="email" type="email" name="email" placeholder="Почта">
+        <small *ngIf="signupForm.get('email')?.invalid && signupForm.controls['email']?.dirty"
+          class="error-message">Ошибка заполнения (неверный формат почты)</small>
+        <input formControlName="password" type="password" name="pswd" placeholder="Пароль">
+        <small *ngIf="signupForm.get('password')?.invalid && signupForm.controls['password']?.dirty"
+          class="error-message">Ошибка заполнения (минимум {{passwordMinLength}} символов)</small>
+          <small *ngIf="alreadyRegistered" class="error-message">Пользователь уже зарегистрирован</small>
+        <button [disabled]="signupForm.invalid" (click)="registerBtnClick()">Зарегистрироваться</button>
       </form>
     </div>
 
     <div class="login">
-      <form>
-        <label for="chk" aria-hidden="true">Авторизация</label>
-        <input [(ngModel)]="logEmail" type="email" name="email" placeholder="Почта" required="" id="logEmail">
-        <input [(ngModel)]="logPassword" type="password" name="pswd" placeholder="Пароль" required="" id="logPass">
-        <button (click)="loginBtnClick()">Войти</button>
+      <form [formGroup]="loginForm" class="container">
+        <label for="chk" aria-hidden="true" class="auth">Авторизация</label>
+        <input formControlName="email" type="email" name="email" placeholder="Почта">
+        <small *ngIf="loginForm.get('email')?.invalid && loginForm.controls['email']?.dirty"
+          class="error-message">Ошибка заполнения (неверный формат почты)</small>
+        <input formControlName="password" type="password" name="pswd" placeholder="Пароль">
+        <small *ngIf="loginForm.get('password')?.invalid && loginForm.controls['password']?.dirty"
+          class="error-message">Ошибка заполнения (минимум {{passwordMinLength}} символов)</small>
+        <small *ngIf="!userExists" class="error-message">Пользователь не существует</small>
+        <button [disabled]="loginForm.invalid" (click)="loginBtnClick()">Войти</button>
         <button>Восстановить</button>
       </form>
     </div>

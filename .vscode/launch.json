@@ -3,6 +3,13 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "vscode-edge-devtools.debug",
+      "request": "launch",
+      "name": "EDGE_DEV",
+      "url": "http://localhost:4200",
+      "webRoot": "${workspaceFolder}"
+    },
+    {
       "name": "ng serve",
       "type": "vscode-edge-devtools.debug",
       "request": "launch",
@@ -15,13 +22,6 @@
       "request": "launch",
       "preLaunchTask": "npm: test",
       "url": "http://localhost:9876/debug.html"
-    },
-    {
-      "type": "msedge",
-      "request": "launch",
-      "name": "Launch Edge against localhost",
-      "url": "http://localhost:4200",
-      "webRoot": "${workspaceFolder}"
     }
   ]
 }

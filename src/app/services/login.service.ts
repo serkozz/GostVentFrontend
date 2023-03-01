@@ -3,7 +3,6 @@ import { HttpClient, HttpStatusCode } from '@angular/common/http';
 
 import { User } from '../types/user';
 import { BACKEND_BASE_ADDRESS } from '../types/constants';
-import { ErrorInfo } from '../types/errorInfo';
 
 @Injectable({
   providedIn: 'root',

@@ -1,12 +1,9 @@
+import { HttpStatusCode } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SHA256 } from 'crypto-js';
-import {
-  LoginService,
-  LoginState,
-  RegisterState,
-} from 'src/app/services/login.service';
+import { LoginService } from 'src/app/services/login.service';
 import { User } from 'src/app/types/user';
 
 @Component({
@@ -62,38 +59,36 @@ export class LoginPageComponent {
   }
 
   loginBtnClick(): void {
-    if (this.loginForm.invalid) {
-      this.userExists = false;
-      return;
+    if (this.loginForm.valid) {
+      console.log(this.loginForm.value)
+      // let hashedPassword = SHA256(this.loginForm.controls['password'].value).toString()
+      // this.loginForm.controls['password'].setValue(hashedPassword)
+      this.loginService.loginUser(this.loginForm.value)
+      .subscribe({
+        next: res => {
+          alert('Успешная авторизация')
+        },
+        error: err => {
+          alert('Неудачная авторизация')
+        }
+      })
     }
-    let user = new User(
-      null,
-      this.loginForm.controls['email'].value,
-      this.loginForm.controls['password'].value
-    );
-    console.log(`User ${JSON.stringify(user)} logged in`);
-    let loginState: LoginState = this.loginService.loginUser(user);
-    if (loginState == LoginState.LOGGED_IN) this.router.navigate(['/']);
   }
 
   registerBtnClick(): void {
-    if (this.signupForm.invalid) return;
-    let user = new User(
-      this.signupForm.controls['username'].value,
-      this.signupForm.controls['email'].value,
-      SHA256(this.signupForm.controls['password'].value).toString()
-    );
-    let registerState: RegisterState = this.loginService.registerUser(user);
-    if (registerState == RegisterState.REGISTERED) {
-      setTimeout(() => {
-        this.router.navigate(['/']);
-      }, 1000);
-      return;
-    } else {
-      this.alreadyRegistered = true;
-      setTimeout(() => {
-        this.alreadyRegistered = false;
-      }, 3000);
+    if (this.signupForm.valid) {
+      console.log(this.signupForm.value)
+      // let hashedPassword = SHA256(this.signupForm.controls['password'].value).toString()
+      // this.signupForm.controls['password'].setValue(hashedPassword)
+      this.loginService.registerUser(this.signupForm.value)
+      .subscribe({
+        next: res => {
+          alert('Успешная аутентификация')
+        },
+        error: err => {
+          alert('Неудачная аутентификация')
+        }
+      })
     }
   }
 }

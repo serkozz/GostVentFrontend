@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpStatusCode } from '@angular/common/http';
 
-import { User } from '../types/user';
 import { BACKEND_BASE_ADDRESS } from '../types/constants';
 
 @Injectable({

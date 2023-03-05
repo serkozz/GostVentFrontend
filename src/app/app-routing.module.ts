@@ -1,3 +1,5 @@
+import { LoginGuard } from './guards/login.guard';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -16,7 +18,12 @@ const routes: Routes = [
   },
   {
     path: 'register',
-    component: LoginPageComponent
+    component: LoginPageComponent,
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [LoginGuard],
   },
   { path: '**', component: PageNotFoundComponent },
 ];

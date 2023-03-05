@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+
+import { ToastrService } from 'ngx-toastr';
 import { LoginService } from 'src/app/services/login.service';
 
 @Component({
@@ -21,6 +23,7 @@ export class LoginPageComponent {
   constructor(
     private loginService: LoginService,
     private formBuilder: FormBuilder,
+    private toastr: ToastrService,
     private router: Router
   ) {}
 
@@ -57,14 +60,20 @@ export class LoginPageComponent {
 
   loginBtnClick(): void {
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value)
+      // console.log(this.loginForm.value)
       this.loginService.loginUser(this.loginForm.value)
       .subscribe({
         next: res => {
-          alert('Успешная авторизация')
+          this.toastr.success('Переходим в личный кабинет!', 'Успешная авторизация');
+          console.log('Login success')
+          this.loginService.storeToken(res.token)
+          console.log(res)
+          this.router.navigate(['/dashboard'])
         },
         error: err => {
-          alert(err.error.message)
+          this.toastr.error(`${err.error.message}`, `Неудачная авторизация`);
+          console.log('Login failed')
+          console.log(err.error)
         }
       })
     }
@@ -72,15 +81,19 @@ export class LoginPageComponent {
 
   registerBtnClick(): void {
     if (this.signupForm.valid) {
-      console.log(this.signupForm.value)
+      // console.log(this.signupForm.value)
       this.loginService.registerUser(this.signupForm.value)
       .subscribe({
         next: res => {
-          alert('Успешная регистрация')
+          this.toastr.success('Переходим в личный кабинет!', 'Успешная регистрация');
+          console.log('Register success')
+          console.log(res)
+          this.router.navigate(['/'])
         },
         error: err => {
-          alert(err.error.message)
-          console.log(err)
+          this.toastr.error(`${err.error.message}`, `Неудачная регистрация`);
+          console.log('Register failed')
+          console.log(err.error)
         }
       })
     }

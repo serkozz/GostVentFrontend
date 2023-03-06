@@ -1,5 +1,58 @@
 @import 'src/colors.scss';
+@import 'src/sizes.scss';
+// @import 'src/styles.scss';
 
-p, ul, li {
-  color: $bg-color;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+$font-size-default: 16px;
+
+.container {
+  box-sizing: border-box;
+  border-radius: 4px;
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  max-width: 1280px;
+  display: flex;
+  overflow: hidden;
+  box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
+  max-width: 2000px;
+  margin: 0 auto;
 }
+
+.sidebar {
+  flex-basis: 200px;
+  max-width: 200px;
+  flex-shrink: 0;
+  background-color: $bg-color;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.sidebar-list {
+  margin: auto 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sidebar-list-item {
+  display: flex;
+  padding: 15px 45px;
+  justify-content: center;
+}
+
+.sidebar-info {
+  margin-top: 20vh;
+  height: 200px;
+  background-color: $bg-color-lighter;
+}
+
+.content {}

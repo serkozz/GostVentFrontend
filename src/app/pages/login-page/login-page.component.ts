@@ -1,3 +1,4 @@
+import { UserStoreService } from './../../services/userStore.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -24,7 +25,8 @@ export class LoginPageComponent {
     private loginService: LoginService,
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private userStore: UserStoreService
   ) {}
 
   ngOnInit() {
@@ -66,8 +68,13 @@ export class LoginPageComponent {
         next: res => {
           this.toastr.success('Переходим в личный кабинет!', 'Успешная авторизация');
           console.log('Login success')
-          this.loginService.storeToken(res.token)
           console.log(res)
+
+          this.loginService.storeToken(res.token)
+          const userTokenPayload = this.loginService.decodeToken()
+          this.userStore.setUsername(userTokenPayload.unique_name)
+          this.userStore.setRole(userTokenPayload.role)
+
           this.router.navigate(['/dashboard'])
         },
         error: err => {

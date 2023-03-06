@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
+import { JwtHelperService } from '@auth0/angular-jwt'
 import { BACKEND_BASE_ADDRESS } from '../types/constants';
 import { Observable } from 'rxjs';
 
@@ -9,7 +9,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class LoginService {
-  constructor(private http: HttpClient, private router: Router) {}
+  private userTokenPayload: any
+
+  constructor(private http: HttpClient,
+    private router: Router) {
+      this.userTokenPayload = this.decodeToken()
+    }
 
   registerUser(user: any): Observable<any> {
     let url: string = BACKEND_BASE_ADDRESS + 'register';
@@ -32,6 +37,22 @@ export class LoginService {
 
   getToken(): string | null {
     return localStorage.getItem('token')
+  }
+
+  decodeToken() {
+    const jwtHelper = new JwtHelperService()
+    const token = this.getToken()!
+    return jwtHelper.decodeToken(token)
+  }
+
+  getUsernameFromToken() {
+    if (this.userTokenPayload)
+      return this.userTokenPayload.unique_name
+  }
+
+  getRoleFromToken() {
+    if (this.userTokenPayload)
+      return this.userTokenPayload.role
   }
 
   isLogedIn(): boolean {

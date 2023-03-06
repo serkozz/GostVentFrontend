@@ -1,17 +1,22 @@
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { LoginService } from 'src/app/services/login.service';
 import { Injectable } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
+  HttpErrorResponse
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 
 @Injectable()
 export class LoginInterceptor implements HttpInterceptor {
 
-  constructor(private loginService: LoginService) {}
+  constructor(private loginService: LoginService,
+    private toastr: ToastrService,
+    private router: Router) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const authToken = this.loginService.getToken()
@@ -21,6 +26,18 @@ export class LoginInterceptor implements HttpInterceptor {
         setHeaders: {Authorization:`Bearer ${authToken}`}
       })
 
-    return next.handle(request);
+    return next.handle(request).pipe(
+      catchError((err) => {
+        if (err instanceof HttpErrorResponse)
+        {
+          if (err.status == 401)
+          {
+            this.toastr.warning("Токен истек, необходима повторная авторизация", "Внимание")
+            this.router.navigate(['/login'])
+          }
+        }
+        return throwError(()=> new Error("Возникла непредвиденная ошибка"))
+      })
+    );
   }
 }

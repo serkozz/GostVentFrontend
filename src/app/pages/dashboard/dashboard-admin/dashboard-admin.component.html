@@ -1,32 +1,27 @@
 <div class="header">
-  <select class="table-selector">
-    <option selected>Выберите таблицу</option>
+  <select (change)="tableSelectorChanged($event)" class="table-selector">
     <option *ngFor="let table of tables">{{table}}</option>
   </select>
+  <button>DebugBtn</button>
 </div>
 <h2>Редактирование таблицы</h2>
 <div class="table-wrapper">
   <table class="fl-table">
     <thead>
       <tr>
-        <th *ngFor="let tableHeader of tableHeaders">
-          {{tableHeader}}
+        <th *ngFor="let header of tableHeaders">
+          {{header}}
         </th>
-        <th>Сохранить</th>
+        <th>Управление</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td *ngFor="let tableCell of tableCells">
-          <div class="form__group field">
-            <input type="input" class="form__field" name="name" id='name' required />
-          </div>
+      <tr *ngFor="let item of items">
+        <td *ngFor="let propValue of itemGetValues(item)">
+          {{propValue}}
         </td>
         <td>
-          <div class="buttons">
-            <button>Да</button>
-            <button>Нет</button>
-          </div>
+          <button (click)="btnChangeClick($event)" class="button-change">Изменить</button>
         </td>
       </tr>
     <tbody>

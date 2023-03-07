@@ -14,6 +14,7 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 import { MainPageAdaptiveComponent } from './pages/main-page-adaptive/main-page-adaptive.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { DashboardAdminComponent } from './pages/dashboard/dashboard-admin/dashboard-admin.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
     MainPageAdaptiveComponent,
     LoginPageComponent,
     DashboardComponent,
+    DashboardAdminComponent
   ],
   imports: [BrowserModule,
     CommonModule,

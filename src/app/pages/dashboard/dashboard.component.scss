@@ -1,58 +1,98 @@
 @import 'src/colors.scss';
-@import 'src/sizes.scss';
-// @import 'src/styles.scss';
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+* {
+  font-family: 'Roboto', sans-serif;
+  box-sizing: border-box;
+  text-decoration: none;
+  color: #FFFFFF;
+  list-style: none;
+  // outline: 1px solid red;
+  transition: all .5s ease;
+}
 
-$font-size-default: 16px;
+.wrapper {
+  width: 100vw;
+  min-width: 320px;
+  height: 100vh;
+  background-color: $bg-color;
+}
 
 .container {
-  box-sizing: border-box;
-  border-radius: 4px;
-  width: 100%;
-  height: 100%;
-  max-height: 100%;
-  max-width: 1280px;
-  display: flex;
-  overflow: hidden;
-  box-shadow: rgb(99 99 99 / 20%) 0px 2px 8px 0px;
-  max-width: 2000px;
+  width: 95vw;
   margin: 0 auto;
+  display: flex;
+  flex-direction: row;
 }
 
 .sidebar {
-  flex-basis: 200px;
-  max-width: 200px;
-  flex-shrink: 0;
-  background-color: $bg-color;
-  display: flex;
-  flex-direction: column;
-}
-
-.sidebar-header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-}
-
-.sidebar-list {
-  margin: auto 0;
+  width: 20vw;
+  height: 100vh;
+  background-color: $bg-color-lighter;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  // Из-за этого может самопроизвольно сложиться сайдбар
+  // overflow: hidden;
+}
+
+.sidebar-logo {
+  width: 100%;
+  height: 10vh;
+}
+
+.sidebar-list {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  list-style: none;
+}
+
+.icon {
+  color: white;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .sidebar-list-item {
   display: flex;
-  padding: 15px 45px;
-  justify-content: center;
+  flex-direction: row;
+  align-content: center;
+  padding: 5% 10%;
+  transition: all .5s ease;
+}
+
+.sidebar-list-item:hover {
+  background-color: $bg-color-darker;
+}
+
+.sidebar-list-item > a {
+  color: $text-color;
+  margin-left: 5px;
+  text-decoration: none;
+  font-size: 24px;
 }
 
 .sidebar-info {
-  margin-top: 20vh;
-  height: 200px;
-  background-color: $bg-color-lighter;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 10vh;
+  background-color: $bg-color-darker;
 }
 
-.content {}
+.sidebar-info-greetings {
+  color: $text-color;
+  font-size: 16px;
+}
+
+.content {
+  width: 100%;
+  height: 100%;
+}

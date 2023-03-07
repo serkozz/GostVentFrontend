@@ -82,7 +82,7 @@
           </div>
           <a href="/products">Товары</a>
         </li>
-        <li class="sidebar-list-item" *ngIf="role == 'Admin'">
+        <li class="sidebar-list-item">
           <div class="icon">
             <i class="ri-history-line"></i>
           </div>
@@ -103,7 +103,10 @@
       </div>
     </div>
     <div class="content">
-      <dashboard-admin></dashboard-admin>
+      <div class="navbar">
+
+      </div>
+      <dashboard-admin *ngIf="role == 'Admin'"></dashboard-admin>
     </div>
   </div>
 </div>

@@ -16,4 +16,21 @@ export class DatabaseService {
   public getTests() {
     return this.http.get<Array<any>>(this.url + '/tables/tests')
   }
+
+  public updateDatabase(action:DatabaseAction, data: Map<string,string>, table: string) {
+    let body: string[] = []
+
+    data.forEach((val, ind, map) => {
+      body.push(val)
+    })
+    console.log(data)
+    console.log(JSON.stringify(body))
+    return this.http.post<any>(this.url + '/tables' + `?action=${action}&table=${table}`, body)
+  }
+}
+
+export enum DatabaseAction {
+  Post,
+  Delete,
+  Update
 }

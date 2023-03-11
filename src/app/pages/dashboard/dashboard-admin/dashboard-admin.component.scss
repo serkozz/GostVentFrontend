@@ -173,10 +173,6 @@ td {
   background: $bg-color-lighter;
 }
 
-.fl-table tr:nth-child(even) {
-  background: $text-color;
-}
-
 
 
 /* Responsive */
@@ -228,11 +224,9 @@ td {
     height: 60px;
     vertical-align: middle;
     box-sizing: border-box;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: hidden;
     width: 120px;
     font-size: 13px;
-    text-overflow: ellipsis;
   }
 
   .fl-table thead th {
@@ -242,23 +236,6 @@ td {
 
   .fl-table tbody tr {
     display: table-cell;
-  }
-
-  .fl-table tbody tr:nth-child(odd) {
-    background: none;
-  }
-
-  .fl-table tr:nth-child(even) {
-    background: transparent;
-  }
-
-  .fl-table tr td:nth-child(odd) {
-    background: #F8F8F8;
-    border-right: 1px solid #E6E4E4;
-  }
-
-  .fl-table tr td:nth-child(even) {
-    border-right: 1px solid #E6E4E4;
   }
 
   .fl-table tbody td {

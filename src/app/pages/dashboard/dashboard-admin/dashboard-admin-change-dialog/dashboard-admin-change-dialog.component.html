@@ -1,0 +1,15 @@
+<div class="container">
+  <h1 mat-dialog-title>Изменение записи</h1>
+  <div mat-dialog-content class="content">
+    <div class="form-group" *ngFor="let fieldName of data.fieldNames; let i = index">
+      <span>{{fieldName}}</span>
+      <!-- User shouldn't be able to manipulate ids !!!!! -->
+      <input [disabled]="i == 0" class="form-field" type="text" [value]="data.fieldValues[i]">
+  </div>
+  </div>
+  <div mat-dialog-actions>
+    <button (click)="saveBtnClick()">Сохранить</button>
+    <button (click)="cancelBtnClick()">Отмена</button>
+  </div>
+</div>
+

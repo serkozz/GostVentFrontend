@@ -60,49 +60,58 @@ export class LoginPageComponent {
     });
   }
 
+  // onInputKeyDown(event: any) {
+  //   if (event.charCode == 32) return false;
+  //   return true
+  // }
+
   loginBtnClick(): void {
     if (this.loginForm.valid) {
       // console.log(this.loginForm.value)
-      this.loginService.loginUser(this.loginForm.value)
-      .subscribe({
-        next: res => {
-          this.toastr.success('Переходим в личный кабинет!', 'Успешная авторизация');
-          console.log('Login success')
-          console.log(res)
+      this.loginService.loginUser(this.loginForm.value).subscribe({
+        next: (res) => {
+          this.toastr.success(
+            'Переходим в личный кабинет!',
+            'Успешная авторизация'
+          );
+          console.log('Login success');
+          console.log(res);
 
-          this.loginService.storeToken(res.token)
-          const userTokenPayload = this.loginService.decodeToken()
-          this.userStore.setUsername(userTokenPayload.unique_name)
-          this.userStore.setRole(userTokenPayload.role)
+          this.loginService.storeToken(res.token);
+          const userTokenPayload = this.loginService.decodeToken();
+          this.userStore.setUsername(userTokenPayload.unique_name);
+          this.userStore.setRole(userTokenPayload.role);
 
-          this.router.navigate(['/dashboard'])
+          this.router.navigate(['/dashboard']);
         },
-        error: err => {
+        error: (err) => {
           this.toastr.error(`${err.error.message}`, `Неудачная авторизация`);
-          console.log('Login failed')
-          console.log(err.error)
-        }
-      })
+          console.log('Login failed');
+          console.log(err.error);
+        },
+      });
     }
   }
 
   registerBtnClick(): void {
     if (this.signupForm.valid) {
       // console.log(this.signupForm.value)
-      this.loginService.registerUser(this.signupForm.value)
-      .subscribe({
-        next: res => {
-          this.toastr.success('Переходим в личный кабинет!', 'Успешная регистрация');
-          console.log('Register success')
-          console.log(res)
-          this.router.navigate(['/'])
+      this.loginService.registerUser(this.signupForm.value).subscribe({
+        next: (res) => {
+          this.toastr.success(
+            'Переходим в личный кабинет!',
+            'Успешная регистрация'
+          );
+          console.log('Register success');
+          console.log(res);
+          this.router.navigate(['/']);
         },
-        error: err => {
+        error: (err) => {
           this.toastr.error(`${err.error.message}`, `Неудачная регистрация`);
-          console.log('Register failed')
-          console.log(err.error)
-        }
-      })
+          console.log('Register failed');
+          console.log(err.error);
+        },
+      });
     }
   }
 }

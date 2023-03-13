@@ -136,6 +136,66 @@ html {
   }
 }
 
+
+/// Buttons
+
+button {
+  padding: 5px;
+  margin: 5px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.buttons-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-content: center;
+}
+
+.button-save {
+  transition-duration: 0.4s;
+  background-color: green;
+  color: $text-color;
+  border-radius: 2px;
+  border-color: transparent;
+  border: 0;
+}
+
+.button-save:hover {
+  background-color: rgba($color: green, $alpha: 0.5);
+  color: $text-color;
+}
+
+.button-delete {
+  transition-duration: 0.4s;
+  background-color: red;
+  color: $text-color;
+  border-radius: 2px;
+  border-color: transparent;
+  border: 0;
+}
+
+.button-delete:hover {
+  background-color: rgba($color: red, $alpha: 0.5);
+  color: $text-color;
+}
+
+.button-cancel {
+  transition-duration: 0.4s;
+  background-color: gray;
+  color: $text-color;
+  border-radius: 2px;
+  border-color: transparent;
+  border: 0;
+}
+
+.button-change:hover {
+  background-color: rgba($color: gray, $alpha: 0.5);
+  color: $text-color;
+}
+
+
 // Center
 body {
   min-height: 100vh;

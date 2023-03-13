@@ -73,11 +73,17 @@
   background-color: $bg-color-darker;
 }
 
-.sidebar-list-item > a {
+.active {
+  background-color: $bg-color-darker;
+}
+
+.sidebar-list-item > span {
   color: $text-color;
   margin-left: 5px;
   text-decoration: none;
+  cursor: pointer;
   font-size: 16px;
+  align-self: center;
 }
 
 .sidebar-info {

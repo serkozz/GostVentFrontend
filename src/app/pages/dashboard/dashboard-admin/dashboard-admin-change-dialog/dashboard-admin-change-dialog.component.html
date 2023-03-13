@@ -7,9 +7,10 @@
       <input [disabled]="i == 0" class="form-field" type="text" [value]="data.fieldValues[i]">
   </div>
   </div>
-  <div mat-dialog-actions>
-    <button (click)="saveBtnClick()">Сохранить</button>
-    <button (click)="cancelBtnClick()">Отмена</button>
+  <div mat-dialog-actions class="buttons-panel">
+    <button (click)="saveBtnClick()" class="button-save">Сохранить</button>
+    <button (click)="deleteBtnClick()" class="button-delete">Удалить</button>
+    <button (click)="cancelBtnClick()" class="button-cancel">Отмена</button>
   </div>
 </div>
 

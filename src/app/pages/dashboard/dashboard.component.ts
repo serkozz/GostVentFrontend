@@ -8,26 +8,43 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  public users: any[] = []
-  public username: string = ""
-  public role: string = ""
+  public username: string = '';
+  public role: string = '';
+  public selectedPage: 'Administration' | 'History' | 'Products' = 'Products';
 
-  constructor(private loginService: LoginService,
-    private userStore: UserStoreService) {}
+  constructor(
+    private loginService: LoginService,
+    private userStore: UserStoreService
+  ) {}
 
   ngOnInit() {
+    this.userStore.getUsername().subscribe((res) => {
+      let username = this.loginService.getUsernameFromToken();
+      this.username = res || username;
+    });
 
-    this.userStore.getUsername().subscribe(res => {
-      let username = this.loginService.getUsernameFromToken()
-      this.username = res || username
-    })
-
-    this.userStore.getRole().subscribe(res => {
-      let role = this.loginService.getRoleFromToken()
-      this.role = res || role
-    })
+    this.userStore.getRole().subscribe((res) => {
+      let role = this.loginService.getRoleFromToken();
+      this.role = res || role;
+    });
   }
+
   logoutClick() {
-    this.loginService.logoutUser()
+    this.loginService.logoutUser();
+  }
+
+  onAdministrationClick() {
+    this.selectedPage = 'Administration';
+    console.log(`SelectedPage: ${this.selectedPage}`)
+  }
+
+  onProductsClick() {
+    this.selectedPage = "Products"
+    console.log(`SelectedPage: ${this.selectedPage}`)
+  }
+
+  onHistoryClick() {
+    this.selectedPage = "History"
+    console.log(`SelectedPage: ${this.selectedPage}`)
   }
 }

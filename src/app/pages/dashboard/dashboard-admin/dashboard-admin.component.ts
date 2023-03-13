@@ -1,12 +1,15 @@
-import { DashboardAdminChangeDialogComponent } from './dashboard-admin-change-dialog/dashboard-admin-change-dialog.component';
+import { DatabaseAction } from 'src/app/types/databaseAction';
 import {
-  DatabaseAction,
-  DatabaseService,
-} from './../../../services/database.service';
+  DashboardAdminChangeDialogComponent,
+  DatabaseActionWithData,
+} from './dashboard-admin-change-dialog/dashboard-admin-change-dialog.component';
+import { DatabaseService } from './../../../services/database.service';
 import { lastValueFrom } from 'rxjs';
 import { UserService } from './../../../services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import Enumerable from 'linq';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'dashboard-admin',
@@ -22,6 +25,9 @@ export class DashboardAdminComponent implements OnInit {
   /// All items from selected table
   public items: any[] = [];
 
+  /// Only items that match filter
+  public filteredItems!: Enumerable.IEnumerable<any>;
+
   /// All table headers for selected table
   public tableHeaders: any[] = [];
 
@@ -31,14 +37,19 @@ export class DashboardAdminComponent implements OnInit {
   constructor(
     private userService: UserService,
     private databaseService: DatabaseService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private toastr: ToastrService,
   ) {}
 
   async ngOnInit() {
     this.tables = await this.loadTables();
     this.selectedTable = this.tables[0];
-    // console.log(this.tables)
     if (this.tables.length != 0) this.loadItems();
+  }
+
+  async reloadComponent() {
+    this.tables = await this.loadTables();
+      if (this.tables.length != 0) this.loadItems();
   }
 
   /// Loads items from selected table into items array
@@ -46,6 +57,7 @@ export class DashboardAdminComponent implements OnInit {
     switch (this.selectedTable) {
       case 'User':
         this.items = await lastValueFrom(this.userService.getUsers());
+        console.log(this.items)
         this.tableHeaders = Object.keys(this.items[0]);
         break;
       case 'Test':
@@ -55,6 +67,7 @@ export class DashboardAdminComponent implements OnInit {
       default:
         break;
     }
+    this.filteredItems = Enumerable.from(this.items);
   }
 
   /// Loads tables to selector
@@ -69,7 +82,10 @@ export class DashboardAdminComponent implements OnInit {
 
   private fillChangingRowData(headers: any[], data: any[]) {
     if (headers.length != data.length) {
-      console.error('Headers and data have different array size');
+      this.toastr.error(
+        'Заголовки таблицы не соответствуют данным в ней (разный размер)',
+        'Ошибка'
+      );
       return;
     }
 
@@ -78,7 +94,6 @@ export class DashboardAdminComponent implements OnInit {
     for (let index = 0; index < headers.length; index++) {
       this.changingRowData.set(headers[index], data[index]);
     }
-    console.log(this.changingRowData);
   }
 
   /// Events
@@ -87,8 +102,31 @@ export class DashboardAdminComponent implements OnInit {
     let selector = event.target as HTMLSelectElement;
     let tableIndex = selector.selectedIndex;
     this.selectedTable = this.tables[tableIndex];
-    console.log(`SelectedTable: ${this.selectedTable}`);
+    this.toastr.info(`Выбрана таблица: ${this.selectedTable}`);
     this.loadItems();
+  }
+
+  onFilterChange(event: Event) {
+    let input: HTMLInputElement = event.target as HTMLInputElement;
+    let table: HTMLTableElement = document.getElementsByClassName(
+      'fl-table'
+    )[0] as HTMLTableElement;
+    let rows = Array.from(table.getElementsByTagName('tr'));
+    rows.splice(0, 1);
+    let rowCells: HTMLTableCellElement[];
+
+    for (let i = 0; i < rows.length; i++) {
+      rowCells = Array.from(rows[i].getElementsByTagName('td'));
+
+      let match: boolean = Enumerable.from(rowCells).any((el) =>
+        (el.innerText || el.innerHTML)
+          .toLowerCase()
+          .includes(input.value.toLowerCase())
+      );
+
+      if (match) rows[i].style.display = '';
+      else rows[i].style.display = 'none';
+    }
   }
 
   btnChangeClick(event: any) {
@@ -126,18 +164,21 @@ export class DashboardAdminComponent implements OnInit {
       },
     });
     dialog.afterClosed().subscribe({
-      next: (dialogRes) => {
+      next: (dialogRes: DatabaseActionWithData) => {
         if (dialogRes == null) {
-          console.warn('No changes made to database!');
+          this.toastr.info('Изменения не обнаружены', 'Информация');
           return;
         }
-        this.databaseService.updateDatabase(
-          DatabaseAction.Update,
-          dialogRes,
+        this.databaseService.performAction(
+          dialogRes.action,
+          dialogRes.data,
           this.selectedTable
         );
+        this.toastr.success('Данные успешно модифицированы!', 'Успех');
+        /// TODO: Сюда пропихнуть обновление таблицы
+        this.reloadComponent();
       },
-      error: (err) => console.log('Some error?!'),
+      error: (err) => this.toastr.info(`Возникла ошибка: ${err}`, 'Ошибка'),
     });
   }
 }

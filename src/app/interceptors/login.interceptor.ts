@@ -35,8 +35,9 @@ export class LoginInterceptor implements HttpInterceptor {
             this.toastr.warning("Токен истек, необходима повторная авторизация", "Внимание")
             this.router.navigate(['/login'])
           }
+
         }
-        return throwError(()=> new Error("Возникла непредвиденная ошибка"))
+        return throwError(()=> new Error(`Возникла непредвиденная ошибка`))
       })
     );
   }

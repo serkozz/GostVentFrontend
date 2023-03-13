@@ -1,6 +1,6 @@
-import { FieldData } from './../dashboard-admin.component';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { DatabaseAction } from 'src/app/types/databaseAction';
 
 @Component({
   selector: 'dashboard-admin-change-dialog',
@@ -16,9 +16,6 @@ export class DashboardAdminChangeDialogComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // User shouldn't be able to manipulate ids!!!!!
-    console.log('Data');
-    console.log(this.data);
   }
 
   /**
@@ -55,13 +52,29 @@ export class DashboardAdminChangeDialogComponent implements OnInit {
   }
 
   cancelBtnClick() {
-    console.log('Cancel button clicked');
     this.dialogRef.close();
   }
 
   saveBtnClick() {
-    console.log('Save button clicked');
     let mappedResult = this.createMap()
-    this.dialogRef.close(mappedResult);
+    let result: DatabaseActionWithData = {
+      action: DatabaseAction.Update,
+      data: mappedResult
+    }
+    this.dialogRef.close(result);
   }
+
+  deleteBtnClick() {
+    let mappedResult = this.createMap()
+    let result: DatabaseActionWithData = {
+      action: DatabaseAction.Delete,
+      data: mappedResult
+    }
+    this.dialogRef.close(result);
+  }
+}
+
+export interface DatabaseActionWithData {
+  action: DatabaseAction,
+  data: any
 }

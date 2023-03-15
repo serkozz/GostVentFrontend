@@ -5,7 +5,10 @@
     </select>
   </div>
   <h2>Редактирование таблицы</h2>
-  <input type="text" (keyup)="onFilterChange($event)" placeholder="Поиск записи">
+  <div class="below-header">
+    <input type="text" (keyup)="onFilterChange($event)" placeholder="Поиск записи">
+    <button (click)="btnAddClick($event)" class="button-add">Добавить</button>
+  </div>
   <div class="table-wrapper">
     <table class="fl-table">
       <thead>

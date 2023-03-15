@@ -8,15 +8,17 @@ import { DatabaseAction } from 'src/app/types/databaseAction';
   styleUrls: ['./dashboard-admin-change-dialog.component.scss'],
 })
 export class DashboardAdminChangeDialogComponent implements OnInit {
-
   constructor(
     public dialogRef: MatDialogRef<DashboardAdminChangeDialogComponent>,
     @Inject(MAT_DIALOG_DATA)
-    public data: { fieldNames: string[]; fieldValues: string[]}
+    public data: {
+      fieldNames: string[];
+      fieldValues: string[];
+      dialogType: 'Add' | 'Update';
+    }
   ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   /**
    * Возвращает измененную в диалоговом окне запись в виде набора значений (без ключей)
@@ -48,7 +50,7 @@ export class DashboardAdminChangeDialogComponent implements OnInit {
     updatedData.forEach((val, ind, arr) => {
       mappedData.set(this.data.fieldNames[ind], val);
     });
-    return mappedData
+    return mappedData;
   }
 
   cancelBtnClick() {
@@ -56,25 +58,25 @@ export class DashboardAdminChangeDialogComponent implements OnInit {
   }
 
   saveBtnClick() {
-    let mappedResult = this.createMap()
+    let mappedResult = this.createMap();
     let result: DatabaseActionWithData = {
-      action: DatabaseAction.Update,
-      data: mappedResult
-    }
+      action: this.data.dialogType == 'Add' ? DatabaseAction.Post : DatabaseAction.Update,
+      data: mappedResult,
+    };
     this.dialogRef.close(result);
   }
 
   deleteBtnClick() {
-    let mappedResult = this.createMap()
+    let mappedResult = this.createMap();
     let result: DatabaseActionWithData = {
       action: DatabaseAction.Delete,
-      data: mappedResult
-    }
+      data: mappedResult,
+    };
     this.dialogRef.close(result);
   }
 }
 
 export interface DatabaseActionWithData {
-  action: DatabaseAction,
-  data: any
+  action: DatabaseAction;
+  data: any;
 }

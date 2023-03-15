@@ -40,6 +40,13 @@ h2 {
   padding: 15px;
 }
 
+.below-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
 input{
 	width: 60%;
 	height: 30px;
@@ -117,6 +124,22 @@ $option: $bg-color-lighter;
 
 .button-change:hover {
   background-color: rgba($color: red, $alpha: 0.5);
+  color: $text-color;
+}
+
+.button-add {
+  height: 100%;
+  transition-duration: 0.4s;
+  background-color: green;
+  color: $text-color;
+  border-radius: 2px;
+  border-color: transparent;
+  cursor: pointer;
+  border: 0;
+}
+
+.button-add:hover {
+  background-color: rgba($color: green, $alpha: 0.5);
   color: $text-color;
 }
 

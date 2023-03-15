@@ -7,8 +7,8 @@ import { DatabaseService } from './../../../services/database.service';
 import { lastValueFrom } from 'rxjs';
 import { UserService } from './../../../services/user.service';
 import { Component, OnInit } from '@angular/core';
+import Enumerable from 'linq'
 import { MatDialog } from '@angular/material/dialog';
-import Enumerable from 'linq';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -24,9 +24,6 @@ export class DashboardAdminComponent implements OnInit {
 
   /// All items from selected table
   public items: any[] = [];
-
-  /// Only items that match filter
-  public filteredItems!: Enumerable.IEnumerable<any>;
 
   /// All table headers for selected table
   public tableHeaders: any[] = [];
@@ -49,7 +46,7 @@ export class DashboardAdminComponent implements OnInit {
 
   async reloadComponent() {
     this.tables = await this.loadTables();
-      if (this.tables.length != 0) this.loadItems();
+      if (this.tables.length != 0) await this.loadItems();
   }
 
   /// Loads items from selected table into items array
@@ -57,7 +54,7 @@ export class DashboardAdminComponent implements OnInit {
     switch (this.selectedTable) {
       case 'User':
         this.items = await lastValueFrom(this.userService.getUsers());
-        console.log(this.items)
+        // console.log(this.items)
         this.tableHeaders = Object.keys(this.items[0]);
         break;
       case 'Test':
@@ -67,7 +64,6 @@ export class DashboardAdminComponent implements OnInit {
       default:
         break;
     }
-    this.filteredItems = Enumerable.from(this.items);
   }
 
   /// Loads tables to selector
@@ -102,7 +98,9 @@ export class DashboardAdminComponent implements OnInit {
     let selector = event.target as HTMLSelectElement;
     let tableIndex = selector.selectedIndex;
     this.selectedTable = this.tables[tableIndex];
-    this.toastr.info(`Выбрана таблица: ${this.selectedTable}`);
+    this.toastr.info(`Выбрана таблица: ${this.selectedTable}`, "Таблица", {
+      timeOut: 500
+    });
     this.loadItems();
   }
 
@@ -129,7 +127,7 @@ export class DashboardAdminComponent implements OnInit {
     }
   }
 
-  btnChangeClick(event: any) {
+  btnChangeClick(event: Event) {
     let btn = event.target as HTMLButtonElement;
     /// row including change column
     let rowFull: HTMLTableRowElement = btn.parentElement
@@ -138,19 +136,25 @@ export class DashboardAdminComponent implements OnInit {
     let dataCellArray = Array.from(rowFull.getElementsByTagName('td')).splice(
       0,
       rowFull.childElementCount - 1
-    );
+      );
 
-    let data: any[] = [];
-    dataCellArray.forEach((element) => {
+      let data: any[] = [];
+      dataCellArray.forEach((element) => {
       data.push(element.innerText);
     });
     this.fillChangingRowData(this.tableHeaders, data);
-    this.openChangeDialog(this.tableHeaders, data, '500', '500');
+    this.openChangeDialog(this.tableHeaders, data, 'Update', '500', '500');
+  }
+
+  btnAddClick(event: Event) {
+    this.openChangeDialog(this.tableHeaders, [], 'Add', '500', '500')
+    this.toastr.info('BtnAddCLick', 'Click');
   }
 
   openChangeDialog(
     fieldNames: string[],
     fieldValues: string[],
+    dialogType: 'Add' | 'Update',
     enterAnimationDuration: string,
     exitAnimationDuration: string
   ): void {
@@ -161,25 +165,58 @@ export class DashboardAdminComponent implements OnInit {
       data: {
         fieldNames,
         fieldValues,
+        dialogType
       },
     });
+
     dialog.afterClosed().subscribe({
       next: (dialogRes: DatabaseActionWithData) => {
         if (dialogRes == null) {
           this.toastr.info('Изменения не обнаружены', 'Информация');
           return;
         }
-        this.databaseService.performAction(
-          dialogRes.action,
-          dialogRes.data,
-          this.selectedTable
-        );
-        this.toastr.success('Данные успешно модифицированы!', 'Успех');
-        /// TODO: Сюда пропихнуть обновление таблицы
-        this.reloadComponent();
+        this.processChangeDialogResult(dialogRes)
       },
       error: (err) => this.toastr.info(`Возникла ошибка: ${err}`, 'Ошибка'),
-    });
+    })
+  }
+
+  async processChangeDialogResult(dialogRes: DatabaseActionWithData) {
+    let actionString!: string
+    switch (dialogRes.action) {
+      case DatabaseAction.Post:
+        actionString = "добавлены"
+        break;
+      case DatabaseAction.Delete:
+        actionString = "удалены"
+        break;
+      case DatabaseAction.Update:
+        actionString = "изменены"
+        break;
+      default:
+        break;
+    }
+
+    this.databaseService.performAction(
+      dialogRes.action,
+      dialogRes.data,
+      this.selectedTable
+    ).subscribe(
+      {
+        next: (res) => {
+          this.toastr.success(`Данные успешно ${actionString}!`, 'Успех');
+          console.log(res);
+        },
+        error: (err) => {
+          this.toastr.error(`Данные не были ${actionString}!`, 'Ошибка');
+          console.log(err.message)
+        }
+      }
+    )
+    /// FIXME: Обновление происходит не всегда (иногда приходится вручную менять вьюшку чтобы она обновилась)
+    setTimeout(async () => {
+      await this.reloadComponent();
+    }, 500);
   }
 }
 

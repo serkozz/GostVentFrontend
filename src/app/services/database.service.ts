@@ -26,23 +26,20 @@ export class DatabaseService {
       body.push(val)
     })
     let url: string = this.url + '/tables' + `?action=${action}&table=${table}`
-    console.log("Url")
-    console.log(url)
-    console.log("Data")
-    console.log(data)
-    console.log(JSON.stringify(body))
+    // console.log("Url")
+    // console.log(url)
+    // console.log("Data")
+    // console.log(data)
+    // console.log(JSON.stringify(body))
 
     switch (action) {
       case DatabaseAction.Update:
-        this.http.put<any>(url, body).subscribe(
-          res => console.log(res))
-        break
+        return this.http.put<any>(url, body)
       case DatabaseAction.Delete:
-        this.http.delete<any>(url, {
-          body: body}).subscribe(res => console.log(res))
+        return this.http.delete<any>(url, {body: body})
         break
       case DatabaseAction.Post:
-        this.http.post<any>(url, body).subscribe(res => console.log(res))
+        return this.http.post<any>(url, body)
         break
     }
   }

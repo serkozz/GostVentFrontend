@@ -1,16 +1,26 @@
 <div class="container">
-  <h1 mat-dialog-title>Изменение записи</h1>
+  <h1 mat-dialog-title> {{ data.dialogType == 'Add' ? 'Добавление записи':'Изменение записи' }}</h1>
   <div mat-dialog-content class="content">
-    <div class="form-group" *ngFor="let fieldName of data.fieldNames; let i = index">
+
+    <!-- Old inputs -->
+    <!-- <div class="form-group" *ngFor="let fieldName of data.fieldNames; let i = index">
       <span>{{fieldName}}</span>
-      <!-- User shouldn't be able to manipulate ids !!!!! -->
-      <input [disabled]="i == 0" class="form-field" type="text" [value]="data.fieldValues[i]">
-  </div>
+      <input *ngIf="data.dialogType == 'Update'" [disabled]="i == 0" class="form-field" type="text"
+        [value]="data.fieldValues[i]">
+      <input *ngIf="data.dialogType == 'Add'" [disabled]="i == 0" class="form-field" type="text">
+    </div> -->
+
+    <div class="form-group" *ngFor="let fieldName of data.fieldNames; let i = index">
+      <label class="form-label" for="input">{{fieldName}}</label>
+      <input *ngIf="data.dialogType == 'Update'" [disabled]="i == 0" class="form-field" type="text" name="input"
+        [placeholder]="fieldName" [value]="data.fieldValues[i]">
+      <input *ngIf="data.dialogType == 'Add'" [disabled]="i == 0" class="form-field" type="text" name="input"
+        [placeholder]="fieldName" [value]="data.fieldValues[i]">
+    </div>
   </div>
   <div mat-dialog-actions class="buttons-panel">
     <button (click)="saveBtnClick()" class="button-save">Сохранить</button>
-    <button (click)="deleteBtnClick()" class="button-delete">Удалить</button>
+    <button *ngIf="data.dialogType == 'Update'" (click)="deleteBtnClick()" class="button-delete">Удалить</button>
     <button (click)="cancelBtnClick()" class="button-cancel">Отмена</button>
   </div>
 </div>
-

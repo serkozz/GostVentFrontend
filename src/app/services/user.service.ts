@@ -1,3 +1,4 @@
+import { BACKEND_BASE_ADDRESS } from './../types/constants';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -5,7 +6,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class UserService {
-  private url: string = "http://localhost:5072/users"
+  private url: string = BACKEND_BASE_ADDRESS + "users"
   constructor(private http: HttpClient) {}
 
   getUsers() {

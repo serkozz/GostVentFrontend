@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "gostvent": {
+      "hosting": {
+        "Frontend": [
+          "gostvent"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "gostvent"
+  }
+}

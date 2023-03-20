@@ -1,3 +1,4 @@
+import { BACKEND_BASE_ADDRESS } from './../types/constants';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { DatabaseAction } from '../types/databaseAction';
@@ -7,7 +8,7 @@ import { DatabaseAction } from '../types/databaseAction';
 })
 export class DatabaseService {
 
-  private url: string = "http://localhost:5072/database"
+  private url: string = BACKEND_BASE_ADDRESS + "database"
   constructor(private http: HttpClient) { }
 
   public getTables() {
@@ -15,7 +16,9 @@ export class DatabaseService {
   }
 
   public getTests() {
+    console.log(this.url + '/tables/tests')
     return this.http.get<Array<any>>(this.url + '/tables/tests')
+    // https://3efe-80-234-76-34.eu.ngrok.io/database/tables/tests
   }
 
   // http://localhost:5072/database/tables?action=2&table=User
@@ -26,21 +29,14 @@ export class DatabaseService {
       body.push(val)
     })
     let url: string = this.url + '/tables' + `?action=${action}&table=${table}`
-    // console.log("Url")
-    // console.log(url)
-    // console.log("Data")
-    // console.log(data)
-    // console.log(JSON.stringify(body))
 
     switch (action) {
       case DatabaseAction.Update:
         return this.http.put<any>(url, body)
       case DatabaseAction.Delete:
         return this.http.delete<any>(url, {body: body})
-        break
       case DatabaseAction.Post:
         return this.http.post<any>(url, body)
-        break
     }
   }
 }

@@ -18,7 +18,8 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { DashboardAdminComponent } from './pages/dashboard/dashboard-admin/dashboard-admin.component';
 import { DashboardAdminChangeDialogComponent } from './pages/dashboard/dashboard-admin/dashboard-admin-change-dialog/dashboard-admin-change-dialog.component';
-// import { DashboardAdminExampleComponent } from './pages/dashboard/dashboard-admin-example/dashboard-admin-example.component';
+import { DashboardProductsComponent } from './pages/dashboard/dashboard-products/dashboard-products.component';
+import { DashboardProductsOrderDialogComponent } from './pages/dashboard/dashboard-products/dashboard-products-order-dialog/dashboard-products-order-dialog.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,9 @@ import { DashboardAdminChangeDialogComponent } from './pages/dashboard/dashboard
     LoginPageComponent,
     DashboardComponent,
     DashboardAdminComponent,
-    DashboardAdminChangeDialogComponent
+    DashboardAdminChangeDialogComponent,
+    DashboardProductsComponent,
+    DashboardProductsOrderDialogComponent,
   ],
   imports: [BrowserModule,
     CommonModule,

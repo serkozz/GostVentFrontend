@@ -1,0 +1,128 @@
+@import 'src/colors.scss';
+
+* {
+  font-family: 'Roboto', sans-serif;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  text-decoration: none;
+  color: $bg-color;
+  list-style: none;
+  outline: 1px solid red;
+  transition: all .5s ease;
+}
+
+.wrapper {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+
+.header {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: center;
+  padding: 15px;
+}
+
+h1 {
+  padding: 0;
+  margin: 0;
+  color: $text-color;
+}
+
+// .make-order-btn {
+//   padding: 10px;
+//   background-color: $bg-color-lighter;
+//   border-radius: 5px;
+//   border: 0;
+//   color: $text-color;
+//   cursor: pointer;
+// }
+
+// .make-order-btn:hover {
+//   background-color: $bg-color-darker;
+// }
+
+.content {
+  // padding: 30px;
+  width: 100%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.products-container {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+  justify-items: center;
+  align-items: center;
+  padding: 30px;
+}
+
+/// Product card
+
+.product-card {
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all .5s;
+  cursor: pointer;
+}
+
+.product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.product-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.product-card .content {
+  box-sizing: border-box;
+  width: 100%;
+  position: absolute;
+  padding: 30px 20px 20px 20px;
+  height: auto;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+}
+
+.product-card .date,
+.product-card .title {
+  margin: 0;
+}
+
+.product-card .date {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 4px;
+}
+
+.product-card .title {
+  font-size: 18px;
+  color: $text-color;
+}

@@ -83,11 +83,11 @@
           </div>
           <span (click)="onProductsClick()">Товары</span>
         </li>
-        <li [ngClass]="{'active': selectedPage == 'History', 'sidebar-list-item': true}">
+        <li [ngClass]="{'active': selectedPage == 'Orders', 'sidebar-list-item': true}">
           <div class="icon">
             <i class="ri-history-line"></i>
           </div>
-          <span (click)="onHistoryClick()" >История</span>
+          <span (click)="onHistoryClick()" >Заказы</span>
         </li>
         <li [ngClass]="{'active': selectedPage == 'Administration', 'sidebar-list-item': true}" *ngIf="role == 'Admin'">
           <div class="icon">
@@ -108,6 +108,7 @@
 
       </div>
       <dashboard-admin *ngIf="role == 'Admin' && selectedPage == 'Administration'"></dashboard-admin>
+      <dashboard-products *ngIf="selectedPage == 'Products'"></dashboard-products>
     </div>
   </div>
 </div>

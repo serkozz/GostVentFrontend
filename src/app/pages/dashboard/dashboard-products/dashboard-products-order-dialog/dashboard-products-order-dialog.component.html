@@ -1,0 +1,44 @@
+<div class="wrapper">
+  <div class="product-header">
+    <h1 class="product-name">
+      {{this.data.productName}}
+    </h1>
+  </div>
+  <div class="product-description">
+    <h2>
+      Описание
+    </h2>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil autem facere explicabo aliquam nam fuga rerum ut
+      beatae tempora tenetur? Asperiores aperiam porro dignissimos ea illum suscipit accusantium, ipsum quae?
+    </p>
+
+    <div class="production-time">
+      <h2>Сроки производства:</h2>
+      <h2>3 дн.</h2>
+    </div>
+
+  </div>
+
+  <div class="product-order">
+    <h2>
+      Файлы проекта
+    </h2>
+    <p>
+      Прикрепите все чертежи пожелания к заказу. После расчета стоимости заказа вы сможете подтвердить или отклонить его
+      в корзине заказов
+    </p>
+    <div class="input-file-row">
+      <label class="input-file">
+        <input type="file" name="file[]" multiple (change)="onInputChange($event)" enctype='multipart/form-data' accept=".jpg, .jpeg, .png">
+        <span>Выберите файлы</span>
+      </label>
+      <div class="input-file-list">
+        <h5 *ngFor="let file of fileList" class="input-file-list-item">
+          {{file.name}}
+        </h5>
+      </div>
+      <button (click)="orderBtnClick($event)" class="order-btn" *ngIf="fileList.length != 0">Сделать заказ</button>
+    </div>
+  </div>
+</div>

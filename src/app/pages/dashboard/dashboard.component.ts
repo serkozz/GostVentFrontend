@@ -10,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class DashboardComponent implements OnInit {
   public username: string = '';
   public role: string = '';
-  public selectedPage: 'Administration' | 'History' | 'Products' = 'Products';
+  public selectedPage: 'Administration' | 'Orders' | 'Products' = 'Products';
 
   constructor(
     private loginService: LoginService,
@@ -44,7 +44,7 @@ export class DashboardComponent implements OnInit {
   }
 
   onHistoryClick() {
-    this.selectedPage = "History"
+    this.selectedPage = "Orders"
     console.log(`SelectedPage: ${this.selectedPage}`)
   }
 }

@@ -8,14 +8,16 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./dashboard-products-order-dialog.component.scss']
 })
 export class DashboardProductsOrderDialogComponent {
-
+  orderName: string = ''
   fileList: File[] = []
+  orderCreating: boolean = false
 
   constructor(
     public dialogRef: MatDialogRef<DashboardProductsOrderDialogComponent>,
     @Inject(MAT_DIALOG_DATA)
     public data: {
-      productName: string;
+      productName: string,
+      email: string
     },
     public orderService: OrderService
   ) {}
@@ -31,18 +33,22 @@ export class DashboardProductsOrderDialogComponent {
   }
 
   orderBtnClick(event: Event) {
-    console.log("Clicked")
     let orderData: FormData = new FormData()
     this.fileList.forEach(file => {
       orderData.append('test', file, file.name)
     });
-    this.orderService.createOrder(orderData).subscribe(
+    this.orderCreating = true
+    this.orderService.createOrder(orderData, this.orderName, this.data.email).subscribe(
       {
         next: (val) => {
           console.log(val);
+          this.orderCreating = false
+          this.dialogRef.close(true)
         },
         error: (err) => {
           console.error(err);
+          this.orderCreating = false
+          this.dialogRef.close(false)
         }
       }
     );

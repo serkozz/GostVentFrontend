@@ -18,10 +18,7 @@ export class DatabaseService {
   public getTests() {
     console.log(this.url + '/tables/tests')
     return this.http.get<Array<any>>(this.url + '/tables/tests')
-    // https://3efe-80-234-76-34.eu.ngrok.io/database/tables/tests
   }
-
-  // http://localhost:5072/database/tables?action=2&table=User
 
   public performAction(action:DatabaseAction, data: Map<string,string>, table: string) {
     let body: string[] = []

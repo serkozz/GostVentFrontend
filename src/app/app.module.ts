@@ -20,6 +20,7 @@ import { DashboardAdminComponent } from './pages/dashboard/dashboard-admin/dashb
 import { DashboardAdminChangeDialogComponent } from './pages/dashboard/dashboard-admin/dashboard-admin-change-dialog/dashboard-admin-change-dialog.component';
 import { DashboardProductsComponent } from './pages/dashboard/dashboard-products/dashboard-products.component';
 import { DashboardProductsOrderDialogComponent } from './pages/dashboard/dashboard-products/dashboard-products-order-dialog/dashboard-products-order-dialog.component';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { DashboardProductsOrderDialogComponent } from './pages/dashboard/dashboa
     DashboardAdminChangeDialogComponent,
     DashboardProductsComponent,
     DashboardProductsOrderDialogComponent,
+    LoadingSpinnerComponent,
   ],
   imports: [BrowserModule,
     CommonModule,

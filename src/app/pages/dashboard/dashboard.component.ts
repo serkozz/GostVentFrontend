@@ -8,13 +8,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  public username: string = '';
-  public role: string = '';
-  public selectedPage: 'Administration' | 'Orders' | 'Products' = 'Products';
+  public username: string = ''
+  public email: string = ''
+  public role: string = ''
+  public selectedPage: 'Administration' | 'Orders' | 'Products' = 'Products'
 
   constructor(
     private loginService: LoginService,
-    private userStore: UserStoreService
+    private userStore: UserStoreService,
   ) {}
 
   ngOnInit() {
@@ -22,6 +23,12 @@ export class DashboardComponent implements OnInit {
       let username = this.loginService.getUsernameFromToken();
       this.username = res || username;
     });
+
+    this.userStore.getEmail().subscribe( (res) => {
+      let email = this.loginService.getEmailFromToken()
+      this.email = res || email
+      console.log(email)
+    })
 
     this.userStore.getRole().subscribe((res) => {
       let role = this.loginService.getRoleFromToken();

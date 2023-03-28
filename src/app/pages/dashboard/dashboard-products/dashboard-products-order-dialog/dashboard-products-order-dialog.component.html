@@ -28,17 +28,25 @@
       Прикрепите все чертежи пожелания к заказу. После расчета стоимости заказа вы сможете подтвердить или отклонить его
       в корзине заказов
     </p>
-    <div class="input-file-row">
+    <div class="input-file-column">
+      <input type="text" placeholder="Имя заказа" [(ngModel)]="orderName">
       <label class="input-file">
-        <input type="file" name="file[]" multiple (change)="onInputChange($event)" enctype='multipart/form-data' accept=".jpg, .jpeg, .png">
+        <input type="file" name="file[]" multiple (change)="onInputChange($event)" enctype='multipart/form-data'
+          accept=".jpg, .jpeg, .png">
         <span>Выберите файлы</span>
       </label>
+
       <div class="input-file-list">
         <h5 *ngFor="let file of fileList" class="input-file-list-item">
           {{file.name}}
         </h5>
       </div>
-      <button (click)="orderBtnClick($event)" class="order-btn" *ngIf="fileList.length != 0">Сделать заказ</button>
+      <button (click)="orderBtnClick($event)" class="order-btn" *ngIf="fileList.length != 0 && orderName.length > 0">Сделать заказ</button>
+    </div>
+    <div *ngIf="orderCreating" class="order-creation-loader"
+      style="display: flex; flex-direction: row; justify-content: space-around; align-items: center;">
+      <loading-spinner></loading-spinner>
+      <h3>Создание заказа</h3>
     </div>
   </div>
 </div>

@@ -55,6 +55,11 @@ export class LoginService {
       return this.userTokenPayload.role
   }
 
+  getEmailFromToken() {
+    if (this.userTokenPayload)
+      return this.userTokenPayload.email
+  }
+
   isLogedIn(): boolean {
     // !! returns true if value exists
     return !!localStorage.getItem('token')

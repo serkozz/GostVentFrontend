@@ -60,11 +60,6 @@ export class LoginPageComponent {
     });
   }
 
-  // onInputKeyDown(event: any) {
-  //   if (event.charCode == 32) return false;
-  //   return true
-  // }
-
   loginBtnClick(): void {
     if (this.loginForm.valid) {
       // console.log(this.loginForm.value)
@@ -75,18 +70,17 @@ export class LoginPageComponent {
             'Успешная авторизация'
           );
           console.log('Login success');
-          console.log(res);
 
           this.loginService.storeToken(res.token);
           const userTokenPayload = this.loginService.decodeToken();
           this.userStore.setUsername(userTokenPayload.unique_name);
           this.userStore.setRole(userTokenPayload.role);
+          this.userStore.setEmail(userTokenPayload.email);
 
           this.router.navigate(['/dashboard']);
         },
         error: (err) => {
           this.toastr.error(`${err.error.message}`, `Неудачная авторизация`);
-          console.log('Login failed');
           console.log(err.error);
         },
       });
@@ -95,7 +89,6 @@ export class LoginPageComponent {
 
   registerBtnClick(): void {
     if (this.signupForm.valid) {
-      // console.log(this.signupForm.value)
       this.loginService.registerUser(this.signupForm.value).subscribe({
         next: (res) => {
           this.toastr.success(

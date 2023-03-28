@@ -78,11 +78,27 @@ h2 {
 }
 
 
-.input-file-row {
+.input-file-column {
 	display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+}
+
+input[type='text']{
+	width: 100%;
+	height: 30px;
+  margin: 15px;
+	background: $bg-color-darker;
+	justify-content: center;
+	display: flex;
+  align-self: center;
+	padding: 10px;
+	border: none;
+	outline: none;
+	border-radius: 5px;
+  align-self: center;
+  color: $text-color;
 }
 .input-file {
 	position: relative;

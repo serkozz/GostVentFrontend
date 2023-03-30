@@ -4,7 +4,7 @@
   font-family: 'Roboto', sans-serif;
   box-sizing: border-box;
   text-decoration: none;
-  color: #FFFFFF;
+  color: $text-color;
   list-style: none;
   // outline: 1px solid red;
   transition: all .5s ease;
@@ -17,6 +17,7 @@
   overflow-y: hidden;
   overflow-x: hidden;
   background-color: $bg-color;
+
 }
 
 .container {
@@ -24,7 +25,7 @@
   margin: 0 auto;
   display: flex;
   flex-direction: row;
-
+  box-shadow: 0 3px 6px rgba(black,0.16), 0 3px 6px rgba(black,0.23);
 }
 
 .sidebar {
@@ -106,6 +107,13 @@
   height: 100%;
 }
 
+.navbar {
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  display: none;
+}
+
 @media (max-width: 768px) {
   .sidebar {
     display: none;
@@ -113,8 +121,5 @@
 
   .navbar {
     display: flex;
-    width: 100%;
-    height: 10vh;
-    background-color: red;
   }
 }

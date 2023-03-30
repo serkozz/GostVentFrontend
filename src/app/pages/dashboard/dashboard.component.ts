@@ -11,7 +11,7 @@ export class DashboardComponent implements OnInit {
   public username: string = ''
   public email: string = ''
   public role: string = ''
-  public selectedPage: 'Administration' | 'Orders' | 'Products' = 'Products'
+  public selectedPage: 'Administration' | 'Orders' | 'Products' = 'Orders'
 
   constructor(
     private loginService: LoginService,

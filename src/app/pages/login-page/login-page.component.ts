@@ -92,17 +92,17 @@ export class LoginPageComponent {
       this.loginService.registerUser(this.signupForm.value).subscribe({
         next: (res) => {
           this.toastr.success(
-            'Переходим в личный кабинет!',
+            'Вам доступен личный кабинет!',
             'Успешная регистрация'
           );
           console.log('Register success');
           console.log(res);
-          this.router.navigate(['/']);
+          this.router.navigate(['/login']);
         },
         error: (err) => {
-          this.toastr.error(`${err.error.message}`, `Неудачная регистрация`);
+          console.log(err);
+          this.toastr.error(`${err.message}`, `Неудачная регистрация`);
           console.log('Register failed');
-          console.log(err.error);
         },
       });
     }

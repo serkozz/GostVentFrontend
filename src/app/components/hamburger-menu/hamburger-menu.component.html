@@ -1,0 +1,11 @@
+<div class="hamburger-menu">
+  <input id="menu__toggle" type="checkbox" (toggle)="toggle()" />
+  <label class="menu__btn" for="menu__toggle">
+    <span></span>
+  </label>
+  <ul class="menu__box">
+    <li><a class="menu__item" (click)="menuItemClick($event)">Товары</a></li>
+    <li><a class="menu__item" (click)="menuItemClick($event)">Заказы</a></li>
+    <li><a class="menu__item" (click)="menuItemClick($event)">Управление</a></li>
+  </ul>
+</div>

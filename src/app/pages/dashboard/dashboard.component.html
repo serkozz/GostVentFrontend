@@ -105,11 +105,10 @@
       </div>
     </div>
     <div class="content">
-      <div class="navbar">
-
-      </div>
+      <hamburger-menu [role]="role" [(selectedPage)]="selectedPage" class="navbar"></hamburger-menu>
       <dashboard-admin *ngIf="role == 'Admin' && selectedPage == 'Administration'"></dashboard-admin>
       <dashboard-products [email]="email" *ngIf="selectedPage == 'Products'"></dashboard-products>
+      <dashboard-orders [email]="email" *ngIf="selectedPage == 'Orders'"></dashboard-orders>
     </div>
   </div>
 </div>

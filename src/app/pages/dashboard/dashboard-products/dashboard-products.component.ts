@@ -10,8 +10,7 @@ import { Component, Input } from '@angular/core';
 })
 export class DashboardProductsComponent {
   @Input() email: string = ''
-  constructor(private toastr: ToastrService, private dialog: MatDialog) {
-  }
+  constructor(private toastr: ToastrService, private dialog: MatDialog) { }
 
   openOrderDialog(event: Event) {
     let productCard: HTMLDivElement = event.target as HTMLDivElement;

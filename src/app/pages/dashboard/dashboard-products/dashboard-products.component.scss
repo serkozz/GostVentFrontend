@@ -18,6 +18,7 @@
   display: flex;
   flex-direction: column;
   align-content: center;
+
 }
 
 .header {
@@ -36,18 +37,6 @@ h1 {
   color: $text-color;
 }
 
-// .make-order-btn {
-//   padding: 10px;
-//   background-color: $bg-color-lighter;
-//   border-radius: 5px;
-//   border: 0;
-//   color: $text-color;
-//   cursor: pointer;
-// }
-
-// .make-order-btn:hover {
-//   background-color: $bg-color-darker;
-// }
 
 .content {
   // padding: 30px;

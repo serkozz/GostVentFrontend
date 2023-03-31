@@ -1,4 +1,5 @@
 @import 'src/colors.scss';
+@import 'src/sizes.scss';
 
 * {
   font-family: 'Roboto', sans-serif;
@@ -29,7 +30,6 @@
   padding: 15px;
 }
 
-
 h1 {
   padding: 0;
   margin: 0;
@@ -44,19 +44,98 @@ h1 {
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  overflow-y: scroll;
 }
 
 .orders-list {
   width: 100%;
   height: 100%;
-  background-color: $bg-color-lighter;
+  background-color: $bg-color;
+  border-radius: 10px;
   margin: 0;
-  padding: 0;
+  padding: 10px;
+  overflow-y: scroll;
 }
 
 .order-info {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  min-width: 200px;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  height: 20%;
+  border-radius: 10px;
+  border: 3px solid $bg-color-lighter;
+  margin: 10px 0px;
+  overflow-x: hidden;
+  cursor: pointer;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  height: 100%;
+  // background-color: $bg-color-lighter;
+  // border-radius: 5px;
+  border: none;
+  pointer-events: none;
+  // margin-right: 10%;
+  // margin-left: 5%;
+
+  h3 {
+    color: $text-color;
+    margin-top: 20%;
+    margin-bottom: 5%;
+  }
+
+  h5 {
+    margin-bottom: 20%;
+  }
+}
+
+.section-price {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+  // background-color: $bg-color-lighter;
+  // border-radius: 5px;
+  border: none;
+  pointer-events: none;
+  // margin-right: 10%;
+  // margin-left: 5%;
+
+  h3 {
+    color: $text-color;
+    margin-top: 20%;
+    margin-bottom: 5%;
+  }
+
+  h5 {
+    margin-bottom: 20%;
+  }
+}
+
+.more-btn {
+  transition-duration: 0.4s;
+  background-color: green;
+  color: $text-color;
+  border-radius: 5px;
+  border-color: transparent;
+  cursor: pointer;
+  border: 0;
+}
+
+.more-btn:hover {
+  background-color: rgba($color: green, $alpha: 0.5);
+  color: $text-color;
+}
+
+.order-info:hover {
+  background-color: $bg-color-lighter;
 }

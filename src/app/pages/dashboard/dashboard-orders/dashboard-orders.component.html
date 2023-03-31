@@ -3,9 +3,27 @@
     <h1>Управление заказами</h1>
   </div>
   <div class="container">
-    <ul class="orders-list">
-      <li class="order-info">
-
+    <loading-spinner [spinnerText]="'Получение заказов'" [useSpinnerText]="true" *ngIf="this.ordersList == null"></loading-spinner>
+    <ul class="orders-list" *ngIf="ordersLoaded">
+      <h2 style="text-align: center;" *ngIf="this.ordersList != null && this.ordersList.length == 0">У вас нет заказов</h2>
+      <li class="order-info" *ngFor="let order of ordersList" (click)="orderInfoClick($event)">
+        <div class="section">
+          <h3>Имя заказа</h3>
+          <h5>{{ order.name }}</h5>
+        </div>
+        <div class="section">
+          <h3>Тип товара</h3>
+          <h5>{{ productType[order.productType] }}</h5>
+        </div>
+        <div class="section">
+          <h3>Статус заказа</h3>
+          <h5>{{ orderStatus[order.status] }}</h5>
+        </div>
+        <div class="section">
+          <h3>Цена заказа</h3>
+          <h5 *ngIf="order.price <= 0">Оценка</h5>
+          <h5 *ngIf="order.price > 0">{{ order.price }}</h5>
+        </div>
       </li>
     </ul>
   </div>

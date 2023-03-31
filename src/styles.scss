@@ -5,12 +5,40 @@
 
 // Toaster menu
 @import 'ngx-toastr/toastr';
+@import 'src/colors.scss';
 
 body {
   padding: 0;
   margin: 0;
   overflow-x: hidden;
   // outline: 1px solid red;
+}
+
+@media only screen and (max-width: 430px) {
+  h1 {
+    font-size: 20px;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: $bg-color;
+  // border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $bg-color-lighter;
+  // border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: $bg-color-darker;
 }
 
 // html, body { height: 100%; }

@@ -29,7 +29,7 @@
       в корзине заказов
     </p>
     <div class="input-file-column">
-      <input type="text" placeholder="Имя заказа" [(ngModel)]="orderName">
+      <input type="text" placeholder="Имя заказа (неизменяемо)" [(ngModel)]="orderName">
       <label class="input-file">
         <input type="file" name="file[]" multiple (change)="onInputChange($event)" enctype='multipart/form-data'
           accept=".jpg, .jpeg, .png">

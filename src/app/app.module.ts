@@ -23,6 +23,7 @@ import { DashboardProductsOrderDialogComponent } from './pages/dashboard/dashboa
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { DashboardOrdersComponent } from './pages/dashboard/dashboard-orders/dashboard-orders.component';
 import { HamburgerMenuComponent } from './components/hamburger-menu/hamburger-menu.component';
+import { DashboardOrderInfoDialogComponent } from './pages/dashboard/dashboard-orders/dashboard-order-info-dialog/dashboard-order-info-dialog.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { HamburgerMenuComponent } from './components/hamburger-menu/hamburger-me
     LoadingSpinnerComponent,
     DashboardOrdersComponent,
     HamburgerMenuComponent,
+    DashboardOrderInfoDialogComponent,
   ],
   imports: [BrowserModule,
     CommonModule,

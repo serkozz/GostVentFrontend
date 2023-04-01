@@ -10,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
 import Enumerable from 'linq'
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
+import { ErrorInfo } from 'src/app/types/errorInfo';
 
 @Component({
   selector: 'dashboard-admin',
@@ -177,7 +178,7 @@ export class DashboardAdminComponent implements OnInit {
         }
         this.processChangeDialogResult(dialogRes)
       },
-      error: (err) => this.toastr.info(`Возникла ошибка: ${err}`, 'Ошибка'),
+      error: (err: ErrorInfo) => this.toastr.info(`${err.message}`, `Ошибка`),
     })
   }
 
@@ -207,8 +208,8 @@ export class DashboardAdminComponent implements OnInit {
           this.toastr.success(`Данные успешно ${actionString}!`, 'Успех');
           console.log(res);
         },
-        error: (err) => {
-          this.toastr.error(`Данные не были ${actionString}!`, 'Ошибка');
+        error: (err: ErrorInfo) => {
+          this.toastr.error(`Данные не были ${actionString}! ${err.message}`, 'Ошибка');
           console.log(err.message)
         }
       }

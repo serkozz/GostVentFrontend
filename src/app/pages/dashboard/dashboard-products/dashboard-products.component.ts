@@ -3,6 +3,7 @@ import { DashboardProductsOrderDialogComponent } from './dashboard-products-orde
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
 import { Component, Input } from '@angular/core';
+import { ErrorInfo } from 'src/app/types/errorInfo';
 
 @Component({
   selector: 'dashboard-products',
@@ -42,10 +43,8 @@ export class DashboardProductsComponent {
       next: (dialogRes: boolean) => {
         if (dialogRes == true)
           this.toastr.success('Заказ создан, отследить его статус можно на вкладке заказов', 'Успех');
-          if (dialogRes == false)
-          this.toastr.error('Заказ не был создан', 'Неудача');
       },
-      error: (err) => this.toastr.error(`Возникла ошибка: ${err}`, 'Ошибка'),
+      error: (err: ErrorInfo) => this.toastr.error(`Возникла ошибка: ${err.message}`, 'Ошибка'),
     });
   }
 

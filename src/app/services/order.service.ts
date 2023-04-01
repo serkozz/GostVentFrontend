@@ -14,8 +14,7 @@ export class OrderService {
 
   createOrder(order: FormData, orderName: string, productType: ProductType, clientEmail: string) {
     orderName = this.createOrderName(orderName, productType, clientEmail)
-    console.log(`ProductTypeInCreateOrderFunc: ${productType}`)
-    console.log(orderName);
+    console.log(order)
     return this.http.post<any>(this.url + `?orderName=${orderName}`, order)
   }
 

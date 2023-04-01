@@ -1,7 +1,9 @@
+import { ToastrService } from 'ngx-toastr';
 import { ProductType } from '../../../../types/productType';
 import { OrderService } from './../../../../services/order.service';
 import { Component, Inject} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ErrorInfo } from 'src/app/types/errorInfo';
 
 @Component({
   selector: 'dashboard-products-order-dialog',
@@ -22,7 +24,8 @@ export class DashboardProductsOrderDialogComponent {
       productType: ProductType
       email: string
     },
-    public orderService: OrderService
+    public orderService: OrderService,
+    public toastr: ToastrService
   ) {
     this.productType = data.productType
   }
@@ -46,13 +49,12 @@ export class DashboardProductsOrderDialogComponent {
     this.orderService.createOrder(orderData, this.orderName, this.productType, this.data.email).subscribe(
       {
         next: (val) => {
-          console.log(val);
           this.orderCreating = false
           this.dialogRef.close(true)
         },
-        error: (err) => {
-          console.error(err);
+        error: (err: ErrorInfo) => {
           this.orderCreating = false
+          this.toastr.error(`Возникла ошибка: ${err.message}`, 'Ошибка')
           this.dialogRef.close(false)
         }
       }

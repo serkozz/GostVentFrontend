@@ -9,7 +9,7 @@
       <li class="order-info" *ngFor="let order of ordersList" (click)="orderInfoClick($event)">
         <div class="section">
           <h3>Имя заказа</h3>
-          <h5>{{ order.name }}</h5>
+          <h5 [class]="orderNameElementClassName">{{ order.name }}</h5>
         </div>
         <div class="section">
           <h3>Тип товара</h3>

@@ -6,6 +6,6 @@
   <ul class="menu__box">
     <li><a class="menu__item" (click)="menuItemClick($event)">Товары</a></li>
     <li><a class="menu__item" (click)="menuItemClick($event)">Заказы</a></li>
-    <li><a class="menu__item" (click)="menuItemClick($event)">Управление</a></li>
+    <li><a class="menu__item" *ngIf="role == 'Admin'" (click)="menuItemClick($event)">Управление БД</a></li>
   </ul>
 </div>

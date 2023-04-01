@@ -6,7 +6,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./hamburger-menu.component.scss'],
 })
 export class HamburgerMenuComponent {
-  @Input() role: string = 'User'
+  @Input() role: 'Admin' | 'User' = 'User'
   @Input() selectedPage!: 'Administration' | 'Orders' | 'Products'
   @Output() selectedPageChange = new EventEmitter<'Administration' | 'Orders' | 'Products'>();
 
@@ -22,7 +22,7 @@ export class HamburgerMenuComponent {
         this.selectedPage = 'Orders'
         this.selectedPageChange.emit('Orders')
         break;
-      case 'Управление':
+      case 'Управление БД':
         this.selectedPage = 'Administration'
         this.selectedPageChange.emit('Administration')
         break;

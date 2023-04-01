@@ -1,3 +1,4 @@
+import { ErrorInfo } from 'src/app/types/errorInfo';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { LoginService } from 'src/app/services/login.service';
@@ -11,6 +12,12 @@ import {
 } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 
+
+
+/// Все что делает данный перехватчик, это ловит исходящий запрос и подставляет заголовок Authorization
+/// Полученный ответ от сервера отлавливается, и проверяется на наличие ошибок, если ошибка 401 (не авторизован)
+/// то возвращаем пользователя на страницу авторизации, если ошибка другого типа, то оставляем ошибку необработанной
+/// Обработкой остальных типов ошибок занимаются подписчики в сервисах
 @Injectable()
 export class LoginInterceptor implements HttpInterceptor {
 
@@ -37,7 +44,7 @@ export class LoginInterceptor implements HttpInterceptor {
           }
 
         }
-        return throwError(()=> new Error(`Возникла непредвиденная ошибка`))
+        return throwError(() => err.error)
       })
     );
   }

@@ -23,6 +23,10 @@ export class OrderService {
     return `${email}_${orderName}_${ProductType[productType]}_${currentDate.toLocaleDateString("ru-RU")}`
   }
 
+  getOrders() {
+    return this.http.get<Array<any>>(this.url);
+  }
+
   getOrdersByEmail(email: string) {
     return this.http.get<Order[]>(this.url + `?email=${email}`)
   }

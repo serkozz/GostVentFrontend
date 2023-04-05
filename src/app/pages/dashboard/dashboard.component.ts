@@ -36,8 +36,8 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  logoutClick() {
-    this.loginService.logoutUser();
+  logoClick() {
+    this.loginService.clearToken();
   }
 
   onAdministrationClick() {

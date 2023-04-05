@@ -45,7 +45,20 @@ export class DashboardProductsOrderDialogComponent {
     this.fileList.forEach(file => {
       orderData.append('test', file, file.name)
     });
+
+    if (this.orderName.length > 20)
+    {
+      this.toastr.error("Имя заказа должно быть короче 20 символов", "Ошибка")
+      return
+    }
+
+    if (this.orderName.includes('_'))
+    {
+      this.toastr.error("Имя заказа не должно содержать символа '_'", "Ошибка")
+      return
+    }
     this.orderCreating = true
+
     this.orderService.createOrder(orderData, this.orderName, this.productType, this.data.email).subscribe(
       {
         next: (val) => {

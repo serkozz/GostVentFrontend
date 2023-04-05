@@ -11,6 +11,8 @@ import Enumerable from 'linq'
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { ErrorInfo } from 'src/app/types/errorInfo';
+import { OrderService } from 'src/app/services/order.service';
+import { type } from 'jquery';
 
 @Component({
   selector: 'dashboard-admin',
@@ -32,8 +34,10 @@ export class DashboardAdminComponent implements OnInit {
   /// Changing row data
   public changingRowData: Map<string, string> | undefined = undefined;
 
+
   constructor(
     private userService: UserService,
+    private orderService: OrderService,
     private databaseService: DatabaseService,
     private dialog: MatDialog,
     private toastr: ToastrService,
@@ -55,11 +59,17 @@ export class DashboardAdminComponent implements OnInit {
     switch (this.selectedTable) {
       case 'User':
         this.items = await lastValueFrom(this.userService.getUsers());
-        // console.log(this.items)
+        console.log(this.items)
+        this.tableHeaders = Object.keys(this.items[0]);
+        break;
+      case 'Order':
+        this.items = await lastValueFrom(this.orderService.getOrders());
+        console.log(this.items)
         this.tableHeaders = Object.keys(this.items[0]);
         break;
       case 'Test':
         this.items = await lastValueFrom(this.databaseService.getTests());
+        console.log(this.items)
         this.tableHeaders = Object.keys(this.items[0]);
         break;
       default:
@@ -74,7 +84,19 @@ export class DashboardAdminComponent implements OnInit {
 
   /// Get all values from item fields
   itemGetValues(item: any) {
-    return Object.values(item);
+    // let values: unknown[] = []
+
+    // Object.values(item).forEach(value => {
+    //   if (typeof value == 'object')
+    //     values.push((value as ObjectWithId).id)
+    //   else
+    //     values.push(value)
+    // });
+    // console.log(values)
+    // return values;
+    let values: unknown[] = Object.values(item)
+    // console.log(this.items)
+    return values
   }
 
   private fillChangingRowData(headers: any[], data: any[]) {
@@ -219,9 +241,4 @@ export class DashboardAdminComponent implements OnInit {
       await this.reloadComponent();
     }, 500);
   }
-}
-
-export interface FieldData {
-  fieldName: string;
-  fieldContent: string;
 }

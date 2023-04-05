@@ -1,0 +1,103 @@
+@import 'src/colors.scss';
+
+* {
+  font-family: 'Roboto', sans-serif;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  text-decoration: none;
+  color: $bg-color;
+  list-style: none;
+  // outline: 1px solid red;
+  transition: all .5s ease;
+  color: $text-color;
+  margin: 0;
+}
+
+.wrapper {
+  display: flex;
+  /// Для маленьких дисплеев включать это
+  // height: 100vh;
+  // overflow-y: scroll;
+
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  background-color: $bg-color;
+}
+
+p {
+  text-align: center;
+}
+
+h1 {
+  margin: 10px;
+}
+
+h3 {
+  margin: 10px 0px;
+  text-align: center;
+}
+
+.order-description {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  background-color: $bg-color-lighter;
+  border-radius: 15px;
+}
+
+h2 {
+  margin: 10px;
+}
+
+h5 {
+  text-align: center;
+}
+
+.production-time {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-files {
+  width: 100%;
+  margin-top: 10px;
+  padding: 15px;
+  display: flex;
+  border-radius: 15px;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $bg-color-lighter;
+
+  & p {
+    margin: 10px 0;
+  }
+}
+
+.order-properties {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.property-container {
+  white-space: nowrap; /* Текст не переносится */
+  overflow: hidden; /* Обрезаем всё за пределами блока */
+  text-overflow: ellipsis; /* Добавляем многоточие */
+
+  border-radius: 10px;
+  background: $bg-color;
+  padding: 15px;
+  flex-basis: 200px;
+  // max-width: 300px;
+  flex-grow: 1;
+}

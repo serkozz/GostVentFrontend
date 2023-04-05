@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'hamburger-menu',
@@ -9,6 +10,13 @@ export class HamburgerMenuComponent {
   @Input() role: 'Admin' | 'User' = 'User'
   @Input() selectedPage!: 'Administration' | 'Orders' | 'Products'
   @Output() selectedPageChange = new EventEmitter<'Administration' | 'Orders' | 'Products'>();
+
+  constructor(private loginService: LoginService) {
+  }
+
+  logoClick() {
+    this.loginService.clearToken();
+  }
 
   menuItemClick(event: Event) {
     let anchor = event.target as HTMLAnchorElement

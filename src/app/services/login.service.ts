@@ -35,6 +35,10 @@ export class LoginService {
     localStorage.setItem('token', tokenValue)
   }
 
+  clearToken() {
+    localStorage.removeItem('token')
+  }
+
   getToken(): string | null {
     return localStorage.getItem('token')
   }

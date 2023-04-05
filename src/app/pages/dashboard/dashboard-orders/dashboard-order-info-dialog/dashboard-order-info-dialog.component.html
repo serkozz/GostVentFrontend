@@ -1,1 +1,51 @@
-<p>{{ data.order.name }}</p>
+<div class="wrapper">
+  <div class="order-header">
+    <h1>
+      Информация о заказе
+    </h1>
+  </div>
+  <div class="order-description">
+    <h2>
+      Описание
+    </h2>
+
+    <div class="order-properties">
+      <div class="property-container">
+        <h3>Имя</h3>
+        <h5>{{ selectedOrder.name }}</h5>
+      </div>
+      <div class="property-container">
+        <h3>Тип продукта</h3>
+        <h5>{{ productType[selectedOrder.productType] }}</h5>
+      </div>
+      <div class="property-container">
+        <h3>Статус выполнения</h3>
+        <h5>{{ orderStatus[selectedOrder.status] }}</h5>
+      </div>
+      <div class="property-container">
+        <h3>Цена</h3>
+        <h5 *ngIf="selectedOrder.price <= 0">Оценка</h5>
+        <h5 *ngIf="selectedOrder.price > 0">{{ selectedOrder.price + ' руб.' }}</h5>
+      </div>
+      <div class="property-container">
+        <h3>Дата создания</h3>
+        <h5>{{ declDate(selectedOrder.creationDate) }}</h5>
+      </div>
+      <div class="property-container">
+        <h3>Время выполнения</h3>
+        <h5>{{ selectedOrder.leadDays + ' ' + declNum(selectedOrder.leadDays, dayTextForms) }}</h5>
+      </div>
+    </div>
+  </div>
+
+  <div class="order-files">
+    <h2>
+      Файлы проекта
+    </h2>
+    <div *ngIf="!orderFilesFetched" class="order-creation-loader"
+      style="display: flex; flex-direction: row; justify-content: space-around; align-items: center;">
+      <loading-spinner></loading-spinner>
+      <h3>Получение файлов заказа</h3>
+    </div>
+  </div>
+</div>

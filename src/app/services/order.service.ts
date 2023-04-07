@@ -18,13 +18,17 @@ export class OrderService {
     return this.http.post<any>(this.url + `?orderName=${orderName}`, order)
   }
 
+  deleteOrder(order: Order, email: string) {
+    return this.http.delete<Order>(this.url + `?email=${email}&orderName=${order.name}`)
+  }
+
   private createOrderName(orderName: string, productType: ProductType, email: string): string {
     let currentDate: Date = new Date()
     return `${email}_${orderName}_${ProductType[productType]}_${currentDate.toLocaleDateString("ru-RU")}`
   }
 
   getOrders() {
-    return this.http.get<Array<any>>(this.url);
+    return this.http.get<Array<any>>(this.url + "s");
   }
 
   getOrdersByEmail(email: string) {

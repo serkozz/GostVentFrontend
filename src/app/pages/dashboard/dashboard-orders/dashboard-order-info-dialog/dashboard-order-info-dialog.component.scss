@@ -26,6 +26,13 @@
   background-color: $bg-color;
 }
 
+.order-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 p {
   text-align: center;
 }
@@ -100,4 +107,27 @@ h5 {
   flex-basis: 200px;
   // max-width: 300px;
   flex-grow: 1;
+}
+
+.delete-btn {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+	outline: none;
+	text-decoration: none;
+	font-size: 12px;
+	vertical-align: middle;
+	color: rgb(255 255 255);
+	text-align: center;
+	border-radius: 4px;
+	background-color: rgb(200, 0, 0);
+	height: 30px;
+	box-sizing: border-box;
+	border: none;
+	margin: 0;
+	transition: background-color 0.2s;
+}
+
+.delete-btn:hover {
+	background-color: rgb(220, 0, 0);
 }

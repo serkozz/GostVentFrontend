@@ -80,16 +80,18 @@ export class DashboardOrdersComponent {
       maxHeight: '80vh',
       data: {
         order: selectedOrder,
+        email: this.email
       },
     })
 
     dialog.afterClosed().subscribe({
-      next: (dialogRes: boolean) => {
+      next: async (dialogRes: boolean) => {
         if (dialogRes == true)
-          this.toastr.success(
-            'Заказ создан, отследить его статус можно на вкладке заказов',
-            'Успех'
+        this.toastr.success(
+          'Заказ удален',
+          'Успех'
           );
+        this.ordersList = await this.loadOrders();
       },
       error: (err: ErrorInfo) =>
         this.toastr.error(`Возникла ошибка: ${err.message}`, 'Ошибка'),

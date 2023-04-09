@@ -12,7 +12,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { ErrorInfo } from 'src/app/types/errorInfo';
 import { OrderService } from 'src/app/services/order.service';
-import { type } from 'jquery';
 
 @Component({
   selector: 'dashboard-admin',
@@ -84,18 +83,7 @@ export class DashboardAdminComponent implements OnInit {
 
   /// Get all values from item fields
   itemGetValues(item: any) {
-    // let values: unknown[] = []
-
-    // Object.values(item).forEach(value => {
-    //   if (typeof value == 'object')
-    //     values.push((value as ObjectWithId).id)
-    //   else
-    //     values.push(value)
-    // });
-    // console.log(values)
-    // return values;
     let values: unknown[] = Object.values(item)
-    // console.log(this.items)
     return values
   }
 

@@ -25,14 +25,14 @@
       Файлы проекта
     </h2>
     <p>
-      Прикрепите все чертежи пожелания к заказу. После расчета стоимости заказа вы сможете подтвердить или отклонить его
+      Прикрепите все чертежи и пожелания к заказу. После расчета стоимости заказа вы сможете подтвердить или отклонить его
       в корзине заказов
     </p>
     <div class="input-file-column">
       <input type="text" placeholder="Имя заказа (неизменяемо)" [(ngModel)]="orderName">
       <label class="input-file">
         <input type="file" name="file[]" multiple (change)="onInputChange($event)" enctype='multipart/form-data'
-          accept=".jpg, .jpeg, .png">
+          accept=".jpg, .jpeg, .png, .doc, .docx, .xlsx">
         <span>Выберите файлы</span>
       </label>
 

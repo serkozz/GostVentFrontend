@@ -3,12 +3,13 @@ import { ProductType } from './../types/productType';
 import { HttpClient } from '@angular/common/http';
 import { BACKEND_BASE_ADDRESS } from './../types/constants';
 import { Injectable } from '@angular/core';
+import { OrderFileInfo } from '../types/fileInfo';
+import { ErrorInfo } from '../types/errorInfo';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService {
-
   private url: string = BACKEND_BASE_ADDRESS + "order"
   constructor(private http: HttpClient) { }
 
@@ -22,8 +23,26 @@ export class OrderService {
     return this.http.delete<Order>(this.url + `?email=${email}&orderName=${order.name}`)
   }
 
+  deleteOrderFile(orderFileInfo: OrderFileInfo) {
+    return this.http.delete<any>(BACKEND_BASE_ADDRESS + "order/files",
+    {
+      body: orderFileInfo
+    })
+  }
+
+  addOrderFiles(orderFiles: FormData, order: Order, email: string) {
+    let orderCreationDate: Date = new Date(order.creationDate)
+    return this.http.post<any>(BACKEND_BASE_ADDRESS + "order/files" + `?email=${email}&orderName=${order.name}_${ProductType[order.productType]}_${orderCreationDate.toLocaleDateString("ru-RU")}`, orderFiles)
+  }
+
+  getOrderFiles(order: Order, email: string) {
+    let orderCreationDate: Date = new Date(order.creationDate)
+    return this.http.get<OrderFileInfo[]>(BACKEND_BASE_ADDRESS + "order/files/" + `?email=${email}&orderName=${order.name}_${ProductType[order.productType]}_${orderCreationDate.toLocaleDateString("ru-RU")}`)
+  }
+
   private createOrderName(orderName: string, productType: ProductType, email: string): string {
     let currentDate: Date = new Date()
+    console.log()
     return `${email}_${orderName}_${ProductType[productType]}_${currentDate.toLocaleDateString("ru-RU")}`
   }
 

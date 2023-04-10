@@ -73,7 +73,7 @@
     </div>
     <div class="order-prod-priced" *ngIf="orderPriced">
       <p>Для оформления заказа вы будете перенаправлены на сервис ЮКасса</p>
-      <button *ngIf="orderPriced" class="checkout-btn">Оформить заказ</button>
+      <button *ngIf="orderPriced" class="checkout-btn" (click)="checkout()">Оформить заказ</button>
     </div>
   </div>
 </div>

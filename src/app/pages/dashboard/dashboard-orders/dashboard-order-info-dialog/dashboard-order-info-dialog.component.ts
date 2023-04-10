@@ -8,6 +8,8 @@ import { dayTextForms, declDate, declNum } from 'src/app/types/utilityFuncs';
 import { ErrorInfo } from 'src/app/types/errorInfo';
 import { ToastrService } from 'ngx-toastr';
 import { OrderFileInfo } from 'src/app/types/fileInfo';
+import { PaymentService } from 'src/app/services/payment.service';
+import { PaymentResponse } from 'src/app/types/paymentResponse';
 
 @Component({
   selector: 'dashboard-order-info-dialog',
@@ -35,6 +37,7 @@ export class DashboardOrderInfoDialogComponent implements OnInit {
       email: string
     },
     public orderService: OrderService,
+    public paymentService: PaymentService,
     public toastr: ToastrService,
   ) {
     this.selectedOrder = data.order
@@ -129,6 +132,19 @@ export class DashboardOrderInfoDialogComponent implements OnInit {
         },
         error: (error: ErrorInfo) => {
           this.toastr.success(`Файлы успешно добавлены, обновите страницу`, "Успех")
+        }
+      }
+    )
+  }
+
+  checkout() {
+    this.paymentService.orderCheckout(this.selectedOrder, this.email).subscribe(
+      {
+        next: (paymentResponse: PaymentResponse) => {
+          window.open(paymentResponse.confirmation.confirmationUrl)
+        },
+        error: (err: ErrorInfo) => {
+          console.log(err)
         }
       }
     )

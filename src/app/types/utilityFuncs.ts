@@ -9,9 +9,12 @@ export function declNum(number: number, textForms: string[]): string {
     return textForms[2];
 }
 
-export function declDate(date: string | Date): string {
+export function declDate(date: string | Date | undefined): string {
   const months = 'янв.,фев.,мар.,апр.,май,июн.,июл.,авг.,сен.,окт.,ноя.,дек.'.split(',');
   let parsedDate: Date
+
+  if (typeof date == 'undefined')
+    return 'undefined'
 
   if (typeof date == 'string')
     parsedDate = new Date(Date.parse(date))

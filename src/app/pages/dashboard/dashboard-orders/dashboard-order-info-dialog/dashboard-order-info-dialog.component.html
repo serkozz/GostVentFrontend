@@ -9,7 +9,6 @@
     <h2>
       Описание
     </h2>
-
     <div class="order-properties">
       <div class="property-container">
         <h3>Имя</h3>
@@ -52,7 +51,7 @@
     </div>
     <h3 [style.display]="orderFiles.length <= 0 && orderFilesFetched ? 'block' : 'none'">Нет файлов</h3>
     <div *ngIf="!orderFilesFetched" class="order-creation-loader"
-    style="display: flex; flex-direction: row; justify-content: space-around; align-items: center;">
+    style="width: 90%; display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; align-self: center; align-items: center;">
     <loading-spinner></loading-spinner>
       <h3>Получение файлов заказа</h3>
     </div>
@@ -66,14 +65,39 @@
     </ul>
   </div>
   <div class="order-prod-block">
+    <h2>
+      Статус платежа
+    </h2>
     <div class="order-prod-created" *ngIf="!orderPriced">
       <p>
         После проверки материалов вашего заказа и оценки стоимости, вам будет предложено его дальнейшее оформление
       </p>
     </div>
-    <div class="order-prod-priced" *ngIf="orderPriced">
+    <div class="order-prod-priced" *ngIf="orderPriced && !orderPaid">
       <p>Для оформления заказа вы будете перенаправлены на сервис ЮКасса</p>
-      <button *ngIf="orderPriced" class="checkout-btn" (click)="checkout()">Оформить заказ</button>
+      <button  class="checkout-btn" (click)="checkout()">Оформить заказ</button>
+    </div>
+    <div class="order-properties" *ngIf="orderPaid">
+      <div class="property-container">
+        <h3>Тип оплаты</h3>
+        <h5>{{ paymentInfo.paymentMethod?.card?.cardType + ' **** ' + paymentInfo.paymentMethod?.card?.last4 }}</h5>
+      </div>
+      <div class="property-container">
+        <h3>Сумма</h3>
+        <h5>{{ paymentInfo.amount.value }} руб. </h5>
+      </div>
+      <div class="property-container">
+        <h3>Дата оплаты</h3>
+        <h5>{{ declDate(paymentInfo.createdAt) }}</h5>
+      </div>
+      <div class="property-container">
+        <h3>Дата принятия</h3>
+        <h5>{{ paymentInfo.capturedAt != null ? declDate(paymentInfo.capturedAt) : "Не принят" }}</h5>
+      </div>
+      <div class="property-container">
+        <h3>Статус</h3>
+        <h5>{{ translateStatus(paymentInfo.status) }}</h5>
+      </div>
     </div>
   </div>
 </div>

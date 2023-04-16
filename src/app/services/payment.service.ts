@@ -14,4 +14,8 @@ export class PaymentService {
     return this.http.post<any>(this.url + "/pay" + `?orderName=${order.name}&email=${email}`,
     order)
   }
+
+  public orderStatus(order: Order, email: string) {
+    return this.http.get<any>(this.url + "/status" + `?orderName=${order.name}&email=${email}`)
+  }
 }

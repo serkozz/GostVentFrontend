@@ -8,14 +8,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  public username: string = ''
-  public email: string = ''
-  public role: 'Admin' | 'User' = 'User'
-  public selectedPage: 'Administration' | 'Orders' | 'Products' = 'Orders'
+  public username: string = '';
+  public email: string = '';
+  public role: 'Admin' | 'User' = 'User';
+  public selectedPage: 'Administration' | 'Orders' | 'Products' | 'Statistics' =
+    'Orders';
 
   constructor(
     private loginService: LoginService,
-    private userStore: UserStoreService,
+    private userStore: UserStoreService
   ) {}
 
   ngOnInit() {
@@ -24,11 +25,11 @@ export class DashboardComponent implements OnInit {
       this.username = res || username;
     });
 
-    this.userStore.getEmail().subscribe( (res) => {
-      let email = this.loginService.getEmailFromToken()
-      this.email = res || email
-      console.log(email)
-    })
+    this.userStore.getEmail().subscribe((res) => {
+      let email = this.loginService.getEmailFromToken();
+      this.email = res || email;
+      console.log(email);
+    });
 
     this.userStore.getRole().subscribe((res) => {
       let role = this.loginService.getRoleFromToken();
@@ -42,16 +43,21 @@ export class DashboardComponent implements OnInit {
 
   onAdministrationClick() {
     this.selectedPage = 'Administration';
-    console.log(`SelectedPage: ${this.selectedPage}`)
+    console.log(`SelectedPage: ${this.selectedPage}`);
   }
 
   onProductsClick() {
-    this.selectedPage = "Products"
-    console.log(`SelectedPage: ${this.selectedPage}`)
+    this.selectedPage = 'Products';
+    console.log(`SelectedPage: ${this.selectedPage}`);
   }
 
   onHistoryClick() {
-    this.selectedPage = "Orders"
-    console.log(`SelectedPage: ${this.selectedPage}`)
+    this.selectedPage = 'Orders';
+    console.log(`SelectedPage: ${this.selectedPage}`);
+  }
+
+  onStatisticsClick() {
+    this.selectedPage = 'Statistics';
+    console.log(`SelectedPage: ${this.selectedPage}`);
   }
 }

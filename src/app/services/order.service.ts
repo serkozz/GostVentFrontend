@@ -4,12 +4,12 @@ import { HttpClient } from '@angular/common/http';
 import { BACKEND_BASE_ADDRESS } from './../types/constants';
 import { Injectable } from '@angular/core';
 import { OrderFileInfo } from '../types/fileInfo';
-import { ErrorInfo } from '../types/errorInfo';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService {
+
   private url: string = BACKEND_BASE_ADDRESS + "order"
   constructor(private http: HttpClient) { }
 
@@ -27,6 +27,16 @@ export class OrderService {
     return this.http.delete<any>(BACKEND_BASE_ADDRESS + "order/files",
     {
       body: orderFileInfo
+    })
+  }
+
+  getOrderRating(order: Order, email: string) {
+    return this.http.get<any>(this.url + `/rating?email=${email}&orderName=${order.name}`)
+  }
+
+  rateOrder(order: Order, email: string, rating: number) {
+    return this.http.post<any>(this.url + `/rate?email=${email}&orderName=${order.name}&rating=${rating}`, {
+
     })
   }
 

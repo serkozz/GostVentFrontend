@@ -8,8 +8,8 @@ import { LoginService } from 'src/app/services/login.service';
 })
 export class HamburgerMenuComponent {
   @Input() role: 'Admin' | 'User' = 'User'
-  @Input() selectedPage!: 'Administration' | 'Orders' | 'Products'
-  @Output() selectedPageChange = new EventEmitter<'Administration' | 'Orders' | 'Products'>();
+  @Input() selectedPage!: 'Administration' | 'Orders' | 'Products' | 'Statistics'
+  @Output() selectedPageChange = new EventEmitter<'Administration' | 'Orders' | 'Products' | 'Statistics'>();
 
   constructor(private loginService: LoginService) {
   }
@@ -29,6 +29,10 @@ export class HamburgerMenuComponent {
       case 'Заказы':
         this.selectedPage = 'Orders'
         this.selectedPageChange.emit('Orders')
+        break;
+      case 'Статистика':
+        this.selectedPage = 'Statistics'
+        this.selectedPageChange.emit('Statistics')
         break;
       case 'Управление БД':
         this.selectedPage = 'Administration'

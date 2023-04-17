@@ -24,6 +24,7 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
 import { DashboardOrdersComponent } from './pages/dashboard/dashboard-orders/dashboard-orders.component';
 import { HamburgerMenuComponent } from './components/hamburger-menu/hamburger-menu.component';
 import { DashboardOrderInfoDialogComponent } from './pages/dashboard/dashboard-orders/dashboard-order-info-dialog/dashboard-order-info-dialog.component';
+import { DashboardStatisticsComponent } from './pages/dashboard/dashboard-statistics/dashboard-statistics.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { DashboardOrderInfoDialogComponent } from './pages/dashboard/dashboard-o
     DashboardOrdersComponent,
     HamburgerMenuComponent,
     DashboardOrderInfoDialogComponent,
+    DashboardStatisticsComponent,
   ],
   imports: [BrowserModule,
     CommonModule,

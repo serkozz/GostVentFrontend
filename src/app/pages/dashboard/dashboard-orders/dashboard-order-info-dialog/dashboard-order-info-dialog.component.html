@@ -3,7 +3,7 @@
     <h1>
       Информация о заказе
     </h1>
-    <button (click)="orderDeleteBtnClick()" class="delete-btn">Удалить</button>
+    <button (click)="orderDeleteBtnClick()" class="delete-btn" *ngIf="orderStatus[selectedOrder.status] == 'Создан'">Удалить</button>
   </div>
   <div class="order-description">
     <h2>
@@ -38,12 +38,31 @@
     </div>
   </div>
 
+  <div class="order-rating" *ngIf="orderStatus[selectedOrder.status] == 'Завершен'">
+    <h2>
+      Оцените заказ
+    </h2>
+    <div class="stars">
+      <input type="radio" id="star1" name="rating" value="1" (change)="starBtnClick($event)" />
+      <input type="radio" id="star2" name="rating" value="2" (change)="starBtnClick($event)" />
+      <input type="radio" id="star3" name="rating" value="3" (change)="starBtnClick($event)" />
+      <input type="radio" id="star4" name="rating" value="4" (change)="starBtnClick($event)" />
+      <input type="radio" id="star5" name="rating" value="5" (change)="starBtnClick($event)" />
+      <label for="star1" aria-label="Banana">1 star</label>
+      <label for="star2">2 stars</label>
+      <label for="star3">3 stars</label>
+      <label for="star4">4 stars</label>
+      <label for="star5">5 stars</label>
+    </div>
+    <button (click)="rateOrder()" class="checkout-btn" *ngIf="ratingChosen">Оценить</button>
+  </div>
+
   <div class="order-files">
     <div class="order-files-header">
       <h2>
         Файлы проекта
       </h2>
-      <label class="input-file">
+      <label class="input-file" *ngIf="orderStatus[selectedOrder.status] == 'Создан'">
         <input type="file" name="file[]" multiple (change)="onInputChange($event)" enctype='multipart/form-data'
           accept=".jpg, .jpeg, .png, .doc, .docx, .xlsx">
         <span>Добавить</span>
@@ -51,15 +70,15 @@
     </div>
     <h3 [style.display]="orderFiles.length <= 0 && orderFilesFetched ? 'block' : 'none'">Нет файлов</h3>
     <div *ngIf="!orderFilesFetched" class="order-creation-loader"
-    style="width: 90%; display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; align-self: center; align-items: center;">
-    <loading-spinner></loading-spinner>
+      style="width: 90%; display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; align-self: center; align-items: center;">
+      <loading-spinner></loading-spinner>
       <h3>Получение файлов заказа</h3>
     </div>
     <ul class="order-files-list">
       <li *ngFor="let orderFile of orderFiles">
         <div class="order-files-list-item">
           <a [href]="orderFile.link" class="order-file-link" download="true">{{ orderFile.name }}</a>
-          <i class="ri-close-line" (click)="deleteOrderFile($event)"></i>
+          <i class="ri-close-line" (click)="deleteOrderFile($event)" *ngIf="orderStatus[selectedOrder.status] == 'Создан'"></i>
         </div>
       </li>
     </ul>
@@ -75,7 +94,7 @@
     </div>
     <div class="order-prod-priced" *ngIf="orderPriced && !orderPaid">
       <p>Для оформления заказа вы будете перенаправлены на сервис ЮКасса</p>
-      <button  class="checkout-btn" (click)="checkout()">Оформить заказ</button>
+      <button class="checkout-btn" (click)="checkout()">Оформить заказ</button>
     </div>
     <div class="order-properties" *ngIf="orderPaid">
       <div class="property-container">

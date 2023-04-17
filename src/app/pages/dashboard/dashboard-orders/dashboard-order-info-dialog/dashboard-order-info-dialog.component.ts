@@ -22,6 +22,8 @@ export class DashboardOrderInfoDialogComponent implements OnInit {
   paymentInfo!: YooKassaPaymentInfo
   orderPriced: boolean = false
   orderPaid: boolean = false
+  ratingChosen: boolean = false
+  rating: number = 0
   email!: string;
   orderFiles: OrderFileInfo[] = [];
   filesToAddList: File[] = [];
@@ -51,8 +53,29 @@ export class DashboardOrderInfoDialogComponent implements OnInit {
   async ngOnInit() {
     await this.loadFiles();
     await this.getOrderStatus();
+    await this.getOrderRating();
 
     if (this.selectedOrder.price > 0) this.orderPriced = true;
+  }
+
+  async getOrderRating() {
+    this.orderService.getOrderRating(this.selectedOrder, this.email).subscribe(
+      {
+        next: (orderRating: number) => {
+          this.rating = orderRating
+          console.log(this.rating)
+          this.setStars()
+        },
+        error: (err: ErrorInfo) => {
+          this.toastr.error(err.message, 'Ошибка')
+        }
+      }
+    )
+  }
+
+  setStars() {
+    let star: HTMLInputElement = document.getElementById(`star${this.rating}`) as HTMLInputElement
+    star.checked = true
   }
 
   async loadFiles() {
@@ -164,11 +187,39 @@ export class DashboardOrderInfoDialogComponent implements OnInit {
       .orderCheckout(this.selectedOrder, this.email)
       .subscribe({
         next: (paymentResponse: PaymentResponse) => {
-          window.open(paymentResponse.confirmation.confirmationUrl);
+          window.open(paymentResponse.confirmation.confirmationUrl, '_self');
         },
         error: (err: ErrorInfo) => {
           console.log(err);
         },
       });
+  }
+
+  starBtnClick(event: Event) {
+    let star: HTMLInputElement = event.target as HTMLInputElement
+    this.rating = Number(star.value)
+    console.log(this.rating)
+    this.ratingChosen = true
+  }
+
+  rateOrder() {
+    if (this.rating == 0)
+    {
+      this.toastr.error("Нулевой рейтинг поставить нельзя", "Ошибка")
+      return
+    }
+
+    this.orderService.rateOrder(this.selectedOrder, this.email, this.rating).subscribe(
+      {
+        next: (orderRating: number) => {
+          this.rating = orderRating
+          console.log(this.rating)
+          this.toastr.success("Спасибо за оценку", "Успех")
+        },
+        error: (err: ErrorInfo) => {
+          this.toastr.error(err.message, 'Ошибка')
+        }
+      }
+    )
   }
 }

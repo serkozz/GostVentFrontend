@@ -89,6 +89,12 @@
           </div>
           <span (click)="onHistoryClick()" >Заказы</span>
         </li>
+        <li [ngClass]="{'active': selectedPage == 'Statistics', 'sidebar-list-item': true}">
+          <div class="icon">
+            <i class="ri-line-chart-line"></i>
+          </div>
+          <span (click)="onStatisticsClick()" >Статистика</span>
+        </li>
         <li [ngClass]="{'active': selectedPage == 'Administration', 'sidebar-list-item': true}" *ngIf="role == 'Admin'">
           <div class="icon">
             <i class="ri-tools-fill"></i>
@@ -108,6 +114,7 @@
       <dashboard-admin *ngIf="role == 'Admin' && selectedPage == 'Administration'"></dashboard-admin>
       <dashboard-products [email]="email" *ngIf="selectedPage == 'Products'"></dashboard-products>
       <dashboard-orders [role]="role" [email]="email" *ngIf="selectedPage == 'Orders'"></dashboard-orders>
+      <dashboard-statistics [role]="role" [email]="email" *ngIf="selectedPage == 'Statistics'"></dashboard-statistics>
     </div>
   </div>
 </div>

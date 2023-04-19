@@ -3,7 +3,8 @@
     <div class="sidebar">
       <a href="" (click)="logoClick()">
         <div class="sidebar-logo">
-          <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+          <!DOCTYPE svg
+            PUBLIC "-//W3C//DTD SVG 20010904//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
           <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"
             viewBox="0 0 1024.000000 686.000000" preserveAspectRatio="xMidYMid meet">
             <g transform="translate(0.000000,686.000000) scale(0.100000,-0.100000)" fill="#FFFFFF" stroke="none">
@@ -87,13 +88,13 @@
           <div class="icon">
             <i class="ri-history-line"></i>
           </div>
-          <span (click)="onHistoryClick()" >Заказы</span>
+          <span (click)="onHistoryClick()">Заказы</span>
         </li>
         <li [ngClass]="{'active': selectedPage == 'Statistics', 'sidebar-list-item': true}">
           <div class="icon">
             <i class="ri-line-chart-line"></i>
           </div>
-          <span (click)="onStatisticsClick()" >Статистика</span>
+          <span (click)="onStatisticsClick()">Статистика</span>
         </li>
         <li [ngClass]="{'active': selectedPage == 'Administration', 'sidebar-list-item': true}" *ngIf="role == 'Admin'">
           <div class="icon">
@@ -102,15 +103,33 @@
           <span (click)="onAdministrationClick()">Управление БД</span>
         </li>
       </ul>
+
+      <div class="sidebar-info-actions" [style.display]="moreActions? 'flex' : 'none'">
+        <div class="user-action change" (click)="userActionClick($event)">
+          Сменить пароль
+        </div>
+        <div class="user-action restore" (click)="userActionClick($event)">
+          Восстановить пароль
+        </div>
+        <div class="user-action delete" (click)="userActionClick($event)">
+          Удалить аккаунт
+        </div>
+      </div>
+
       <div class="sidebar-info">
-        <span class="sidebar-info-greetings">Здравствуйте, {{username}}</span>
-        <div class="icon">
-          <i class="ri-more-2-fill"></i>
+        <div class="sidebar-info-greetings">
+          <span>Здравствуйте, {{username}}</span>
+          <div class="more-btn" (click)="expandUserActionsPanel()">
+            <div class="icon">
+              <i class="ri-more-2-fill"></i>
+            </div>
+          </div>
         </div>
       </div>
     </div>
     <div class="content">
-      <hamburger-menu [role]="role" [(selectedPage)]="selectedPage" class="navbar"></hamburger-menu>
+      <hamburger-menu [email]="email" [username]="username" [role]="role" [(selectedPage)]="selectedPage"
+        class="navbar"></hamburger-menu>
       <dashboard-admin *ngIf="role == 'Admin' && selectedPage == 'Administration'"></dashboard-admin>
       <dashboard-products [email]="email" *ngIf="selectedPage == 'Products'"></dashboard-products>
       <dashboard-orders [role]="role" [email]="email" *ngIf="selectedPage == 'Orders'"></dashboard-orders>

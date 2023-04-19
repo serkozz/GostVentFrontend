@@ -25,6 +25,7 @@ import { DashboardOrdersComponent } from './pages/dashboard/dashboard-orders/das
 import { HamburgerMenuComponent } from './components/hamburger-menu/hamburger-menu.component';
 import { DashboardOrderInfoDialogComponent } from './pages/dashboard/dashboard-orders/dashboard-order-info-dialog/dashboard-order-info-dialog.component';
 import { DashboardStatisticsComponent } from './pages/dashboard/dashboard-statistics/dashboard-statistics.component';
+import { PasswordManipulationsDialogComponent } from './pages/dashboard/password-manipulations-dialog/password-manipulations-dialog.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { DashboardStatisticsComponent } from './pages/dashboard/dashboard-statis
     HamburgerMenuComponent,
     DashboardOrderInfoDialogComponent,
     DashboardStatisticsComponent,
+    PasswordManipulationsDialogComponent,
   ],
   imports: [BrowserModule,
     CommonModule,

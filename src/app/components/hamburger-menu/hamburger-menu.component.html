@@ -7,7 +7,8 @@
     <li>
       <a href="" (click)="logoClick()">
         <div class="sidebar-logo">
-          <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+          <!DOCTYPE svg
+            PUBLIC "-//W3C//DTD SVG 20010904//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
           <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"
             viewBox="0 0 1024.000000 686.000000" preserveAspectRatio="xMidYMid meet">
             <g transform="translate(0.000000,686.000000) scale(0.100000,-0.100000)" fill="#FFFFFF" stroke="none">
@@ -85,5 +86,25 @@
     <li><a class="menu__item" (click)="menuItemClick($event)">Заказы</a></li>
     <li><a class="menu__item" (click)="menuItemClick($event)">Статистика</a></li>
     <li><a class="menu__item" *ngIf="role == 'Admin'" (click)="menuItemClick($event)">Управление БД</a></li>
+    <li><a class="menu__item expandable" (click)="menuItemClick($event)">
+        Здравствуйте, {{username}}
+        <div class="icon">
+          <i class="ri-more-2-fill"></i>
+        </div>
+      </a>
+    </li>
+    <li style="position: relative; bottom: 0;">
+      <div class="sidebar-info-actions" [style.display]="moreActions? 'flex' : 'none'">
+        <div class="user-action change" (click)="userActionClick($event)">
+          Сменить пароль
+        </div>
+        <div class="user-action restore" (click)="userActionClick($event)">
+          Восстановить пароль
+        </div>
+        <div class="user-action delete" (click)="userActionClick($event)">
+          Удалить аккаунт
+        </div>
+      </div>
+    </li>
   </ul>
 </div>

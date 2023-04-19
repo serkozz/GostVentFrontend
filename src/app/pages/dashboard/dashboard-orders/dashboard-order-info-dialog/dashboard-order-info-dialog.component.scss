@@ -76,14 +76,14 @@ h5 {
 .order-rating {
   margin-top: 10px;
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
-  align-items: center;
   width: 100%;
   height: auto;
-  padding: 10px;
   background-color: $bg-color-lighter;
   border-radius: 15px;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
 }
 
 $star-size: 20px;
@@ -99,7 +99,7 @@ $color: white;
 
 .stars input {
   position: absolute;
-  clip: rect(0,0,0,0);
+  clip: rect(0, 0, 0, 0);
 }
 
 .stars label {
@@ -113,11 +113,11 @@ $color: white;
   cursor: pointer;
 }
 
-.stars input:nth-child(1):checked ~ label:nth-of-type(-n + 1),
-.stars input:nth-child(2):checked ~ label:nth-of-type(-n + 2),
-.stars input:nth-child(3):checked ~ label:nth-of-type(-n + 3),
-.stars input:nth-child(4):checked ~ label:nth-of-type(-n + 4),
-.stars input:nth-child(5):checked ~ label:nth-of-type(-n + 5) {
+.stars input:nth-child(1):checked~label:nth-of-type(-n + 1),
+.stars input:nth-child(2):checked~label:nth-of-type(-n + 2),
+.stars input:nth-child(3):checked~label:nth-of-type(-n + 3),
+.stars input:nth-child(4):checked~label:nth-of-type(-n + 4),
+.stars input:nth-child(5):checked~label:nth-of-type(-n + 5) {
   @include set-star($color, $color);
 }
 
@@ -153,9 +153,12 @@ $color: white;
 }
 
 .property-container {
-  white-space: nowrap; /* Текст не переносится */
-  overflow: hidden; /* Обрезаем всё за пределами блока */
-  text-overflow: ellipsis; /* Добавляем многоточие */
+  white-space: nowrap;
+  /* Текст не переносится */
+  overflow: hidden;
+  /* Обрезаем всё за пределами блока */
+  text-overflow: ellipsis;
+  /* Добавляем многоточие */
 
   border-radius: 10px;
   background: $bg-color;
@@ -165,22 +168,22 @@ $color: white;
 }
 
 .delete-btn {
-	position: relative;
-	display: inline-block;
-	cursor: pointer;
-	outline: none;
-	text-decoration: none;
-	font-size: 12px;
-	vertical-align: middle;
-	color: rgb(255 255 255);
-	text-align: center;
-	border-radius: 4px;
-	background-color: red;
-	height: 30px;
-	box-sizing: border-box;
-	border: none;
-	margin: 0;
-	transition: background-color 0.2s;
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  outline: none;
+  text-decoration: none;
+  font-size: 12px;
+  vertical-align: middle;
+  color: rgb(255 255 255);
+  text-align: center;
+  border-radius: 4px;
+  background-color: red;
+  height: 30px;
+  box-sizing: border-box;
+  border: none;
+  margin: 0;
+  transition: background-color 0.2s;
 }
 
 .delete-btn:hover {
@@ -224,42 +227,44 @@ $color: white;
 
 
 .input-file {
-	position: relative;
-	display: inline-block;
+  position: relative;
+  display: inline-block;
 }
+
 .input-file span {
-	position: relative;
-	display: inline-block;
-	cursor: pointer;
-	outline: none;
-	text-decoration: none;
-	font-size: 14px;
-	vertical-align: middle;
-	color: rgb(255 255 255);
-	text-align: center;
-	border-radius: 4px;
-	background-color: green;
-	line-height: 22px;
-	height: 40px;
-	padding: 10px 5px;
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  outline: none;
+  text-decoration: none;
+  font-size: 14px;
+  vertical-align: middle;
+  color: rgb(255 255 255);
+  text-align: center;
+  border-radius: 4px;
+  background-color: green;
+  line-height: 22px;
+  height: 40px;
+  padding: 10px 5px;
   width: 80px;
-	box-sizing: border-box;
-	border: none;
-	margin: 0;
-	transition: background-color 0.2s;
+  box-sizing: border-box;
+  border: none;
+  margin: 0;
+  transition: background-color 0.2s;
 }
+
 .input-file input[type=file] {
-	position: absolute;
-	z-index: -1;
-	opacity: 0;
-	display: block;
-	width: 0;
-	height: 0;
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+  display: block;
+  width: 0;
+  height: 0;
 }
 
 /* Focus */
-.input-file input[type=file]:focus + span {
-	box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+.input-file input[type=file]:focus+span {
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
 }
 
 /* Hover/Active */
@@ -267,13 +272,14 @@ $color: white;
   background-color: rgba($color: green, $alpha: 0.5);
 
 }
+
 .input-file:active span {
   background-color: rgba($color: green, $alpha: 0.5);
 }
 
 /* Disabled */
-.input-file input[type=file]:disabled + span {
-	background-color: #eee;
+.input-file input[type=file]:disabled+span {
+  background-color: #eee;
 }
 
 .order-prod-block {
@@ -301,24 +307,35 @@ $color: white;
 }
 
 .checkout-btn {
-	position: relative;
-	display: inline-block;
-	cursor: pointer;
-	outline: none;
-	text-decoration: none;
-	font-size: 12px;
-	vertical-align: middle;
-	color: rgb(255 255 255);
-	text-align: center;
-	border-radius: 4px;
-	background-color: green;
-	height: 30px;
-	box-sizing: border-box;
-	border: none;
-	margin: 0;
-	transition: background-color 0.2s;
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  outline: none;
+  text-decoration: none;
+  font-size: 12px;
+  vertical-align: middle;
+  color: rgb(255 255 255);
+  text-align: center;
+  border-radius: 4px;
+  background-color: green;
+  height: 30px;
+  box-sizing: border-box;
+  border: none;
+  margin: 0;
+  transition: background-color 0.2s;
 }
 
 .checkout-btn:hover {
   background-color: rgba($color: green, $alpha: 0.5);
+}
+
+#input-review {
+  margin: 10px auto;
+  width: 50%;
+  height: 80%;
+  font-size: 14pt;
+  color: $text-color;
+  background-color: $bg-color;
+  border: none;
+  border-radius: 5px;
 }

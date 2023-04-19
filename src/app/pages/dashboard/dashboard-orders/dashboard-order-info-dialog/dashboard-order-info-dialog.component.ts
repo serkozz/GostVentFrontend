@@ -11,6 +11,7 @@ import { OrderFileInfo } from 'src/app/types/fileInfo';
 import { PaymentService } from 'src/app/services/payment.service';
 import { PaymentResponse } from 'src/app/types/paymentResponse';
 import { YooKassaPaymentInfo, translateStatus } from 'src/app/types/paymentInfo';
+import { OrderRating } from 'src/app/types/orderRating';
 
 @Component({
   selector: 'dashboard-order-info-dialog',
@@ -23,7 +24,7 @@ export class DashboardOrderInfoDialogComponent implements OnInit {
   orderPriced: boolean = false
   orderPaid: boolean = false
   ratingChosen: boolean = false
-  rating: number = 0
+  rating: OrderRating = { rating: 0, review: ''}
   email!: string;
   orderFiles: OrderFileInfo[] = [];
   filesToAddList: File[] = [];
@@ -61,10 +62,10 @@ export class DashboardOrderInfoDialogComponent implements OnInit {
   async getOrderRating() {
     this.orderService.getOrderRating(this.selectedOrder, this.email).subscribe(
       {
-        next: (orderRating: number) => {
+        next: (orderRating: OrderRating) => {
           this.rating = orderRating
           console.log(this.rating)
-          this.setStars()
+          this.setRatingSection()
         },
         error: (err: ErrorInfo) => {
           this.toastr.error(err.message, 'Ошибка')
@@ -73,9 +74,11 @@ export class DashboardOrderInfoDialogComponent implements OnInit {
     )
   }
 
-  setStars() {
-    let star: HTMLInputElement = document.getElementById(`star${this.rating}`) as HTMLInputElement
+  setRatingSection() {
+    let star: HTMLInputElement = document.getElementById(`star${this.rating.rating}`) as HTMLInputElement
     star.checked = true
+    let textArea: HTMLTextAreaElement = document.getElementById('input-review') as HTMLTextAreaElement
+    textArea.value = this.rating.review
   }
 
   async loadFiles() {
@@ -196,22 +199,32 @@ export class DashboardOrderInfoDialogComponent implements OnInit {
   }
 
   starBtnClick(event: Event) {
-    let star: HTMLInputElement = event.target as HTMLInputElement
-    this.rating = Number(star.value)
-    console.log(this.rating)
-    this.ratingChosen = true
+    let starRadio: HTMLInputElement = event.target as HTMLInputElement
+    this.rating.rating = Number(starRadio.value)
+  }
+
+  onReviewChanged() {
+    let reviewTextArea: HTMLTextAreaElement = document.getElementById('input-review') as HTMLTextAreaElement
+    this.rating.review = reviewTextArea.value
   }
 
   rateOrder() {
-    if (this.rating == 0)
+    if (this.rating.rating == 0)
     {
       this.toastr.error("Нулевой рейтинг поставить нельзя", "Ошибка")
       return
     }
 
+    if (this.rating.review.length == 0)
+    {
+      this.toastr.error("Оставьте отзыв", "Ошибка")
+      return
+    }
+    console.log(this.rating);
+
     this.orderService.rateOrder(this.selectedOrder, this.email, this.rating).subscribe(
       {
-        next: (orderRating: number) => {
+        next: (orderRating: OrderRating) => {
           this.rating = orderRating
           console.log(this.rating)
           this.toastr.success("Спасибо за оценку", "Успех")

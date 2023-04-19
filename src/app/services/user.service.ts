@@ -1,6 +1,7 @@
 import { BACKEND_BASE_ADDRESS } from './../types/constants';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { User } from '../types/user';
 
 @Injectable({
   providedIn: 'root',
@@ -22,4 +23,11 @@ export class UserService {
   deleteUser(id: any) {
     return this.http.delete(this.url + '/' + id);
   }
+  changePassword(email: string, oldPassword: string, newPassword: string, newPasswordRepeated: string) {
+    return this.http.post(BACKEND_BASE_ADDRESS + 'user/password/change',{
+      email: email,
+      oldPassword: oldPassword,
+      newPassword: newPassword,
+      newPasswordRepeated: newPasswordRepeated })
+    }
 }

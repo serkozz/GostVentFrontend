@@ -1,6 +1,10 @@
 import { UserStoreService } from './../../services/userStore.service';
 import { LoginService } from 'src/app/services/login.service';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ErrorInfo } from 'src/app/types/errorInfo';
+import { ToastrService } from 'ngx-toastr';
+import { PasswordManipulationsDialogComponent } from './password-manipulations-dialog/password-manipulations-dialog.component';
 
 @Component({
   selector: 'dashboard',
@@ -13,10 +17,13 @@ export class DashboardComponent implements OnInit {
   public role: 'Admin' | 'User' = 'User';
   public selectedPage: 'Administration' | 'Orders' | 'Products' | 'Statistics' =
     'Orders';
+  moreActions: any;
 
   constructor(
     private loginService: LoginService,
-    private userStore: UserStoreService
+    private userStore: UserStoreService,
+    private dialog: MatDialog,
+    private toastr: ToastrService,
   ) {}
 
   ngOnInit() {
@@ -60,4 +67,48 @@ export class DashboardComponent implements OnInit {
     this.selectedPage = 'Statistics';
     console.log(`SelectedPage: ${this.selectedPage}`);
   }
+
+  expandUserActionsPanel() {
+    this.moreActions = !this.moreActions;
+  }
+
+  userActionClick(event: Event) {
+    let actionDiv: HTMLDivElement = event.target as HTMLDivElement;
+    let action = actionDiv.className.split(' ', 2)[1];
+    console.log(action);
+    this.moreActions= !this.moreActions
+
+    switch (action) {
+        case 'delete':
+          this.deleteAccount();
+          break;
+        default:
+          this.passwordManipulations(action as 'change' | 'restore');
+          break;
+    }
+  }
+
+  passwordManipulations(passwordManipulationType: 'change' | 'restore') {
+    let dialog = this.dialog.open(PasswordManipulationsDialogComponent, {
+      minWidth: '80vw',
+      data: {
+        passwordManipulationType: passwordManipulationType,
+        email: this.email
+      },
+    });
+
+    dialog.afterClosed().subscribe({
+      next: async (dialogRes: boolean) => {
+        if (dialogRes == true) this.toastr.success('Заказ удален', 'Успех');
+      },
+      error: (err: ErrorInfo) =>
+        this.toastr.error(`Возникла ошибка: ${err.message}`, 'Ошибка'),
+    });
+  }
+
+  restorePassword() {
+
+  }
+
+  deleteAccount() {}
 }

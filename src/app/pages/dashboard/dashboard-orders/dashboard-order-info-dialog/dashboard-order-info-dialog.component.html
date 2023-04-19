@@ -3,7 +3,8 @@
     <h1>
       Информация о заказе
     </h1>
-    <button (click)="orderDeleteBtnClick()" class="delete-btn" *ngIf="orderStatus[selectedOrder.status] == 'Создан'">Удалить</button>
+    <button (click)="orderDeleteBtnClick()" class="delete-btn"
+      *ngIf="orderStatus[selectedOrder.status] == 'Создан'">Удалить</button>
   </div>
   <div class="order-description">
     <h2>
@@ -37,13 +38,12 @@
       </div>
     </div>
   </div>
-
   <div class="order-rating" *ngIf="orderStatus[selectedOrder.status] == 'Завершен'">
     <h2>
       Оцените заказ
     </h2>
     <div class="stars">
-      <input type="radio" id="star1" name="rating" value="1" (change)="starBtnClick($event)" />
+      <input title="1star" type="radio" id="star1" name="rating" value="1" (change)="starBtnClick($event)" />
       <input type="radio" id="star2" name="rating" value="2" (change)="starBtnClick($event)" />
       <input type="radio" id="star3" name="rating" value="3" (change)="starBtnClick($event)" />
       <input type="radio" id="star4" name="rating" value="4" (change)="starBtnClick($event)" />
@@ -54,7 +54,8 @@
       <label for="star4">4 stars</label>
       <label for="star5">5 stars</label>
     </div>
-    <button (click)="rateOrder()" class="checkout-btn" *ngIf="ratingChosen">Оценить</button>
+    <textarea id="input-review" (input)="onReviewChanged()"></textarea>
+    <button (click)="rateOrder()" class="checkout-btn" *ngIf="rating.review.length != 0 && rating.rating != 0">Оценить</button>
   </div>
 
   <div class="order-files">
@@ -78,7 +79,8 @@
       <li *ngFor="let orderFile of orderFiles">
         <div class="order-files-list-item">
           <a [href]="orderFile.link" class="order-file-link" download="true">{{ orderFile.name }}</a>
-          <i class="ri-close-line" (click)="deleteOrderFile($event)" *ngIf="orderStatus[selectedOrder.status] == 'Создан'"></i>
+          <i class="ri-close-line" (click)="deleteOrderFile($event)"
+            *ngIf="orderStatus[selectedOrder.status] == 'Создан'"></i>
         </div>
       </li>
     </ul>

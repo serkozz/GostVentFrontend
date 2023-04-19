@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { BACKEND_BASE_ADDRESS } from './../types/constants';
 import { Injectable } from '@angular/core';
 import { OrderFileInfo } from '../types/fileInfo';
+import { OrderRating } from '../types/orderRating';
 
 @Injectable({
   providedIn: 'root'
@@ -31,12 +32,12 @@ export class OrderService {
   }
 
   getOrderRating(order: Order, email: string) {
-    return this.http.get<any>(this.url + `/rating?email=${email}&orderName=${order.name}`)
+    return this.http.get<OrderRating>(this.url + `/rating?email=${email}&orderName=${order.name}`)
   }
 
-  rateOrder(order: Order, email: string, rating: number) {
-    return this.http.post<any>(this.url + `/rate?email=${email}&orderName=${order.name}&rating=${rating}`, {
-
+  rateOrder(order: Order, email: string, rating: OrderRating) {
+    return this.http.post<any>(this.url + `/rate?email=${email}&orderName=${order.name}`, {
+      rating
     })
   }
 

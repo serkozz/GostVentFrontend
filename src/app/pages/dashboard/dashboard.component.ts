@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ErrorInfo } from 'src/app/types/errorInfo';
 import { ToastrService } from 'ngx-toastr';
 import { PasswordManipulationsDialogComponent } from './password-manipulations-dialog/password-manipulations-dialog.component';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'dashboard',
@@ -24,6 +25,7 @@ export class DashboardComponent implements OnInit {
     private userStore: UserStoreService,
     private dialog: MatDialog,
     private toastr: ToastrService,
+    private userService: UserService
   ) {}
 
   ngOnInit() {
@@ -90,7 +92,8 @@ export class DashboardComponent implements OnInit {
 
   passwordManipulations(passwordManipulationType: 'change' | 'restore') {
     let dialog = this.dialog.open(PasswordManipulationsDialogComponent, {
-      minWidth: '80vw',
+      minWidth: '200px',
+      maxWidth: '400px',
       data: {
         passwordManipulationType: passwordManipulationType,
         email: this.email
@@ -106,9 +109,16 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  restorePassword() {
-
+  deleteAccount() {
+    this.userService.deleteAccount(this.email).subscribe(
+      {
+        next: (confirmationLink: any) => {
+          this.toastr.info("Для удаления аккаунта перейдите по ссылке на почте, после подтверждения любые действия с аккаунтом будут невозможны", "Необходимо подтверждение")
+        },
+        error: (err: ErrorInfo) => {
+          this.toastr.error(err.message, "Ошибка")
+        }
+      }
+    )
   }
-
-  deleteAccount() {}
 }

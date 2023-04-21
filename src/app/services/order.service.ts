@@ -37,7 +37,8 @@ export class OrderService {
 
   rateOrder(order: Order, email: string, rating: OrderRating) {
     return this.http.post<any>(this.url + `/rate?email=${email}&orderName=${order.name}`, {
-      rating
+      Rating: rating.rating,
+      Review: rating.review
     })
   }
 

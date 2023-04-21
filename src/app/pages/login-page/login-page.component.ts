@@ -5,6 +5,9 @@ import { Router } from '@angular/router';
 
 import { ToastrService } from 'ngx-toastr';
 import { LoginService } from 'src/app/services/login.service';
+import { ErrorInfo } from 'src/app/types/errorInfo';
+import { PasswordManipulationsDialogComponent } from '../dashboard/password-manipulations-dialog/password-manipulations-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'login-page',
@@ -26,7 +29,8 @@ export class LoginPageComponent {
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private router: Router,
-    private userStore: UserStoreService
+    private userStore: UserStoreService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -79,13 +83,33 @@ export class LoginPageComponent {
 
           this.router.navigate(['/dashboard']);
         },
-        error: (err) => {
-          this.toastr.error(`${err.error.message}`, `Неудачная авторизация`);
-          console.log(err.error);
+        error: (err: ErrorInfo) => {
+          this.toastr.error(`${err.message}`, `Неудачная авторизация`);
+          console.log(err.message);
         },
       });
     }
   }
+
+  restoreBtnClick(passwordManipulationType: 'change' | 'restore') {
+      let email: string = this.loginForm.controls['email'].value
+      let dialog = this.dialog.open(PasswordManipulationsDialogComponent, {
+        minWidth: '200px',
+        maxWidth: '400px',
+        data: {
+          passwordManipulationType: passwordManipulationType,
+          email: email
+        },
+      });
+
+      dialog.afterClosed().subscribe({
+        next: async (dialogRes: boolean) => {
+          if (dialogRes == true) this.toastr.success('Заказ удален', 'Успех');
+        },
+        error: (err: ErrorInfo) =>
+          this.toastr.error(`Возникла ошибка: ${err.message}`, 'Ошибка'),
+      });
+    }
 
   registerBtnClick(): void {
     if (this.signupForm.valid) {

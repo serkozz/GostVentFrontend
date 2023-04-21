@@ -30,7 +30,7 @@
           class="error-message">Ошибка заполнения (минимум {{passwordMinLength}} символов)</small>
         <small *ngIf="!userExists" class="error-message">Пользователь не существует</small>
         <button [disabled]="loginForm.invalid" (click)="loginBtnClick()">Войти</button>
-        <button>Восстановить</button>
+        <button [disabled]="loginForm.invalid" (click)="restoreBtnClick('restore')">Восстановить</button>
       </form>
     </div>
   </div>

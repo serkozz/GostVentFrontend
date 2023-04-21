@@ -201,11 +201,13 @@ export class DashboardOrderInfoDialogComponent implements OnInit {
   starBtnClick(event: Event) {
     let starRadio: HTMLInputElement = event.target as HTMLInputElement
     this.rating.rating = Number(starRadio.value)
+    this.ratingChosen = true
   }
 
   onReviewChanged() {
     let reviewTextArea: HTMLTextAreaElement = document.getElementById('input-review') as HTMLTextAreaElement
     this.rating.review = reviewTextArea.value
+    this.ratingChosen = true
   }
 
   rateOrder() {

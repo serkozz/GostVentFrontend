@@ -14,7 +14,6 @@ import { User } from 'src/app/types/user';
 export class PasswordManipulationsDialogComponent implements OnInit {
   passwordManipulationType!: 'change' | 'restore';
   email!: string;
-  user: User | undefined;
 
   constructor(
     public dialogRef: MatDialogRef<PasswordManipulationsDialogComponent>,
@@ -31,21 +30,8 @@ export class PasswordManipulationsDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getUserData();
-  }
-
-  async getUserData() {
-    let users = (await lastValueFrom(this.userService.getUsers())) as User[];
-    this.user = users.find((val) => {
-      let user = null;
-      if (val.email == this.email) user = val;
-      return user;
-    });
-
-    if (typeof this.user == 'undefined') {
-      this.toastr.error('Невозможно получить данные пользователя', 'Ошибка');
-      this.dialogRef.close();
-    }
+    if (this.passwordManipulationType == 'restore')
+      this.sendRestoreConfirmationCode()
   }
 
   changePassword() {
@@ -71,4 +57,43 @@ export class PasswordManipulationsDialogComponent implements OnInit {
       }
     )
   }
+
+  sendRestoreConfirmationCode() {
+    this.userService.sendRestoreConfirmationCode(this.email).subscribe(
+      {
+        next: (result: any) => {
+          this.toastr.info("Для восстановления пароля введите код, пришедший на почту в специальное поле, а также введите новый пароль", "Информация")
+        },
+        error: (err: ErrorInfo) => {
+          this.toastr.error(err.message, "Ошибка")
+        }
+      }
+    )
+  }
+
+  restorePassword() {
+    console.log('restored');
+    let confirmationKey = (document.getElementById('confirmation-key') as HTMLInputElement).value
+    let newPassword = (document.getElementById('new-input') as HTMLInputElement).value
+    let repeatPassword = (document.getElementById('repeat-input') as HTMLInputElement).value
+
+    if (newPassword != repeatPassword)
+    {
+      this.toastr.error("Новый пароль не совпадает с повторенным", "Ошибка")
+      return
+    }
+
+    this.userService.restorePassword(this.email, confirmationKey, newPassword, repeatPassword).subscribe(
+      {
+        next: (result: any) => {
+          this.toastr.success("Пароль успешно изменен", "Успех")
+          this.dialogRef.close()
+        },
+        error: (err: ErrorInfo) => {
+          this.toastr.error(err.message, "Ошибка")
+        }
+      }
+    )
+  }
 }
+

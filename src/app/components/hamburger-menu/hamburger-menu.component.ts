@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { PasswordManipulationsDialogComponent } from 'src/app/pages/dashboard/password-manipulations-dialog/password-manipulations-dialog.component';
 import { LoginService } from 'src/app/services/login.service';
+import { UserService } from 'src/app/services/user.service';
 import { ErrorInfo } from 'src/app/types/errorInfo';
 
 @Component({
@@ -21,7 +22,8 @@ export class HamburgerMenuComponent {
 
   constructor(private loginService: LoginService,
     private toastr: ToastrService,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    private userService: UserService) {
   }
 
   logoClick() {
@@ -96,9 +98,18 @@ export class HamburgerMenuComponent {
     });
   }
 
-  restorePassword() {}
-
-  deleteAccount() {}
+  deleteAccount() {
+    this.userService.deleteAccount(this.email).subscribe(
+      {
+        next: (confirmationLink: any) => {
+          this.toastr.info("Для удаления аккаунта перейдите по ссылке на почте, после подтверждения любые действия с аккаунтом будут невозможны", "Необходимо подтверждение")
+        },
+        error: (err: ErrorInfo) => {
+          this.toastr.error(err.message, "Ошибка")
+        }
+      }
+    )
+  }
 
   expandUserActionsPanel() {
     this.moreActions != this.moreActions

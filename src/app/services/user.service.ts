@@ -7,6 +7,7 @@ import { User } from '../types/user';
   providedIn: 'root',
 })
 export class UserService {
+
   private url: string = BACKEND_BASE_ADDRESS + "users"
   constructor(private http: HttpClient) {}
 
@@ -23,6 +24,21 @@ export class UserService {
   deleteUser(id: any) {
     return this.http.delete(this.url + '/' + id);
   }
+
+  sendRestoreConfirmationCode(email: string) {
+    return this.http.post(BACKEND_BASE_ADDRESS + `user/password/restore?email=${email}`, {
+
+    })
+  }
+
+  restorePassword(email: string, confirmationKey: string, newPassword: string, newPasswordRepeated: string) {
+    return this.http.post(BACKEND_BASE_ADDRESS + `user/password/restore/confirm?confirmationCode=${confirmationKey}`, {
+        email: email,
+        oldPassword: '',
+        newPassword: newPassword,
+        newPasswordRepeated: newPasswordRepeated })
+    }
+
   changePassword(email: string, oldPassword: string, newPassword: string, newPasswordRepeated: string) {
     return this.http.post(BACKEND_BASE_ADDRESS + 'user/password/change',{
       email: email,
@@ -30,4 +46,8 @@ export class UserService {
       newPassword: newPassword,
       newPasswordRepeated: newPasswordRepeated })
     }
+
+  deleteAccount(email: string) {
+    return this.http.delete(BACKEND_BASE_ADDRESS + `user/delete?email=${email}`);
+  }
 }

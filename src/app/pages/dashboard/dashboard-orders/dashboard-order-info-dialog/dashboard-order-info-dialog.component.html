@@ -55,7 +55,7 @@
       <label for="star5">5 stars</label>
     </div>
     <textarea id="input-review" (input)="onReviewChanged()"></textarea>
-    <button (click)="rateOrder()" class="checkout-btn" *ngIf="rating.review.length != 0 && rating.rating != 0">Оценить</button>
+    <button (click)="rateOrder()" class="checkout-btn" *ngIf="rating.review.length != 0 && rating.rating != 0 && ratingChosen">Оценить</button>
   </div>
 
   <div class="order-files">

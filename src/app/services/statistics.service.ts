@@ -15,8 +15,6 @@ export class StatisticsService {
   }
 
   public updateStatistics() {
-    return this.http.post<any>(this.url, {
-
-    })
+    return this.http.post<any>(this.url, { })
   }
 }

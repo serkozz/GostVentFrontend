@@ -136,3 +136,14 @@ $option: $bg-color-lighter;
     display: none;
   }
 }
+
+.chart-container {
+  width: 90%;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $bg-color-lighter;
+  border-radius: 10px;
+  margin: 10px auto;
+}

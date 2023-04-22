@@ -2,7 +2,7 @@
   <div class="content">
     <div class="header">
       <h1>
-        Статистика продаж
+        Статистика
       </h1>
     </div>
     <div class="below-header">
@@ -10,11 +10,14 @@
         <option *ngFor="let statistic of statistics">{{statistic}}</option>
       </select>
     </div>
-    <div class="statistics-block">
+    <div class="chart-container">
+      <canvas id="test-chart"></canvas>
+    </div>
+    <!-- <div class="statistics-block">
       <div class="statistics-property">
         <h3>Имя</h3>
         <h5>Test</h5>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>

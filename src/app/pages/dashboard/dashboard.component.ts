@@ -17,7 +17,7 @@ export class DashboardComponent implements OnInit {
   public email: string = '';
   public role: 'Admin' | 'User' = 'User';
   public selectedPage: 'Administration' | 'Orders' | 'Products' | 'Statistics' =
-    'Orders';
+    'Statistics';
   moreActions: any;
 
   constructor(

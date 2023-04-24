@@ -57,8 +57,8 @@ import { PasswordManipulationsDialogComponent } from './pages/dashboard/password
     ReactiveFormsModule,
     MatDialogModule],
   providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: LoginInterceptor,
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoginInterceptor,
     multi:true
   }],
   bootstrap: [AppComponent],

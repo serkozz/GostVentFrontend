@@ -1,3 +1,5 @@
+import { StatisticsData } from "./statisticsReport";
+
 export let dayTextForms: string[] = ['день', 'дня', 'дней']
 
 export function declNum(number: number, textForms: string[]): string {
@@ -36,4 +38,29 @@ export function formatDate(date: Date) {
       day = '0' + day;
 
   return [year, month, day].join('-');
+}
+
+export function getStatisticsDataNames(statisticsDataArray: StatisticsData[]): string[] {
+  let names: string[] = []
+  statisticsDataArray.forEach((val, id, arr) => {
+    names.push(val.name)
+  })
+  return names
+}
+
+export function getStatisticsDataValues(statisticsDataArray: StatisticsData[]): number[] {
+  let values: number[] = []
+  statisticsDataArray.forEach((val, id, arr) => {
+    values.push(val.value)
+  })
+  return values
+}
+
+export function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
 }

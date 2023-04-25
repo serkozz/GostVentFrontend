@@ -9,22 +9,14 @@
       <label for="from">От:</label>
       <input type="date" id="from" [value]="today" name="stat-start" [max]="today" required pattern="\d{4}.\d{2}.\d{2}" (change) = "onDateChanged()">
       <label for="to">До:</label>
-      <input type="date" id="to" [value]="today" name="stat-end" [min]="from" [max]="today" pattern="\d{4}.\d{2}.\d{2}" (change) = "onDateChanged()">
+      <!-- <input type="date" id="to" [value]="today" name="stat-end" [min]="from" [max]="today" pattern="\d{4}.\d{2}.\d{2}" (change) = "onDateChanged()"> -->
+      <input type="date" id="to" [value]="today" name="stat-end" [min]="from" pattern="\d{4}.\d{2}.\d{2}" (change) = "onDateChanged()">
     </div>
-    <!-- <div class="below-header">
-      <select (change)="statisticsSelectorChanged($event)" class="statistics-selector">
-        <option *ngFor="let statistic of statistics">{{statistic}}</option>
-      </select>
-    </div> -->
-    <div class="chart-container">
-      <canvas id="test-chart"></canvas>
+    <!-- <button class="create-stats-btn" (click)="createStatistics()">Создать статистику</button> -->
+
+    <div *ngFor="let stat of toStatistics; let i = index" class="chart-container" id="chart-container">
+      <canvas id='chart-{{i}}'></canvas>
     </div>
 
-    <!-- <div class="statistics-block">
-      <div class="statistics-property">
-        <h3>Имя</h3>
-        <h5>Test</h5>
-      </div>
-    </div> -->
   </div>
 </div>

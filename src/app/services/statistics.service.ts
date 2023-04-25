@@ -21,7 +21,7 @@ export class StatisticsService {
     return this.http.get<any>(this.url + `?fromDate=${formatDate(from)}&toDate=${formatDate(to)}`)
   }
 
-  public updateStatistics() {
-    return this.http.post<any>(this.url, { })
+  public updateStatistics(date: Date) {
+    return this.http.get<any>(this.url + `/calculate?date=${formatDate(date)}`)
   }
 }
